@@ -1,0 +1,164 @@
+.form-container {
+  /* border: 1px solid royalblue; */
+  margin: 20px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.form-container-right{
+  display: flex;
+  /* flex-direction: row-reverse; */
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.form-input-container {
+  /* border: 1px solid rosybrown; */
+  margin: 4px;
+}
+
+.form-input {
+  font-family: Karma;
+  width: 100%;
+  padding: 0px;
+  padding-top: 12px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px dashed #282020;
+  height: 14px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  
+  -webkit-transition: background-color 0.2s ease-in-out, border 0.1s ease-in-out;
+  transition: background-color 0.2s ease-in-out, border 0.1s ease-in-out;
+}
+
+.form-label {
+  text-align: right;
+  font-size: 14px;
+  position: relative;
+  top: 8px;
+  letter-spacing: 1px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-bottom: 3px double tomato;
+}
+
+.form-input:hover {
+  border-bottom: 3px double tomato;
+  /* box-shadow: 0px 1px 0px tomato; */
+  /* background-color: #fff; */
+}
+
+.form-error{
+  height:0px;
+  color: tomato;
+  text-align: left;
+  font-size: 14px;
+  position: relative;
+  top: -14px;
+}
+
+/* BUTTON */
+
+.form-button {
+  font-family: Karma;
+  font-size: 16px;
+  letter-spacing: 1px;
+  padding:6px;
+  border-radius: 2px;
+  color: #fff;
+  border: 1px solid #282020;
+  background-color: #282020;
+  min-width: 100px;
+
+  -webkit-transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.form-button.secondary {
+  color: #282020;
+  border: 1px solid #282020;
+  background-color: #fffaf7;
+  font-size: 14px;
+
+}
+
+.form-button.selected {
+  color: tomato;
+  border: 1px solid transparent;
+}
+
+.form-button.inactive {
+  border: none;
+  background-color: transparent;
+  color: #282020;
+  border: 1px solid transparent;
+}
+
+.form-button.inactive:hover {
+  border: 1px solid transparent;
+  cursor: default;
+  padding:6px;
+  background-color: transparent;
+  color: #282020;
+}
+
+.form-button.inactive:focus {
+  border: none;
+  padding:6px;
+  background-color: transparent;
+  color: #282020;
+}
+
+.form-button:hover {
+  cursor: pointer;
+  /* padding:3px; */
+  /* border: 4px double tomato; */
+  color: tomato;
+}
+
+.form-button:focus {
+  outline: none;
+  /* padding: 3px; */
+  /* border: 4px double tomato; */
+  color: tomato;
+}
+
+
+
+/* TEXT AREA */
+.form-text-area{
+  font-family: Karma;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border-left: none;
+  border:none;
+  border-right: 1px solid #282020;
+  border-left: 1px solid #282020;
+  line-height: 18px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  width: 100%;
+  resize: vertical;
+
+  -webkit-transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.form-text-area:focus{
+  outline: none;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-right: 4px double tomato;
+  border-left: 4px double tomato;
+}
+
+/* SPANS */
+
+.span-highlight{
+  color: tomato;
+}
