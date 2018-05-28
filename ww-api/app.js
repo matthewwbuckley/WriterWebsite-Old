@@ -2,16 +2,8 @@ require("dotenv").config();
 var express = require("express");
 var bodyParser=require("body-parser");
 
-<<<<<<< HEAD
-
-nconf.argv().env().file('keys.json');
-
-var authMiddleware = require("./middleware/auth")
-var errorHandler = require("./routes/helpers/error")
-=======
 var authMiddleware = require("./middleware/auth");
 var errorHandler = require("./routes/helpers/error");
->>>>>>> d77410fe31866773e6babcb95d6fa0c8c1aeb1db
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
