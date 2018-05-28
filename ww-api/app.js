@@ -1,9 +1,9 @@
-require("dotenv").config()
+require("dotenv").config();
 var express = require("express");
 var bodyParser=require("body-parser");
 
-var authMiddleware = require("./middleware/auth")
-var errorHandler = require("./routes/helpers/error")
+var authMiddleware = require("./middleware/auth");
+var errorHandler = require("./routes/helpers/error");
 
 var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -11,7 +11,7 @@ var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
   // intercept OPTIONS method
-  if ('OPTIONS' == req.method) {
+  if ('OPTIONS' === req.method) {
     res.send(200);
   }
   else {
@@ -35,9 +35,9 @@ app.set("view engine", "ejs");
 var pieceRoutes = require("./routes/piece");
 var readingRoutes = require("./routes/reading");
 var userRoutes = require("./routes/user");
-var authRoutes = require("./routes/auth")
-var tagRoutes = require("./routes/tag")
-var ratingRoutes = require("./routes/rating")
+var authRoutes = require("./routes/auth");
+var tagRoutes = require("./routes/tag");
+var ratingRoutes = require("./routes/rating");
 
 // ROUTE SET-UP
 //app.use("/api", indexRoutes);
@@ -56,7 +56,7 @@ app.use(function(req,res,next){
   next(err);
 });
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 
 // UTILITY
@@ -66,8 +66,8 @@ var seed = require("./utility/seed");
 // LISTEN ROUTE
 let port = process.env.PORT || 8080;
 app.listen(port, function(){
-    console.log("The iCYOA api is listening on port: "+port)
-})
+    console.log("The iCYOA api is listening on port: "+port);
+});
 
 // this is a comment to check git
 
