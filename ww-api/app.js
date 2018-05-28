@@ -2,6 +2,9 @@ require("dotenv").config()
 var express = require("express");
 var bodyParser=require("body-parser");
 
+
+nconf.argv().env().file('keys.json');
+
 var authMiddleware = require("./middleware/auth")
 var errorHandler = require("./routes/helpers/error")
 
