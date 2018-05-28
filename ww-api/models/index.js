@@ -1,9 +1,22 @@
 var mongoose = require('mongoose');
+const nconf = require('nconf');
+
+nconf.argv().env().file('keys.json');
 mongoose.set('debug', true);
 
 mongoose.Promise = Promise;
 
-mongoose.connect(process.env.MONGODB_URI, function (err, res) {
+const user = nconf.get('mongoUser');
+const pass = nconf.get('mongoPass');
+const host = nconf.get('mongoHost');
+const port = nconf.get('mongoPort');
+
+let uri = `mongodb://${user}:${pass}@${host}:${port}`;
+if (nconf.get('mongoDatabase')) {
+  uri = `${uri}/${nconf.get('mongoDatabase')}`;
+}
+
+mongoose.connect(uri, function (err, res) {
   if (err) {
   console.log ('ERROR connecting to: ' + process.env.MONGODB_URI + '. ' + err);
   } else {
