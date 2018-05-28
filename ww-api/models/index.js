@@ -15,12 +15,13 @@ let uri = `mongodb://${user}:${pass}@${host}:${port}`;
 if (nconf.get('mongoDatabase')) {
   uri = `${uri}/${nconf.get('mongoDatabase')}`;
 }
+console.log(uri);
 
 mongoose.connect(uri, function (err, res) {
   if (err) {
-  console.log ('ERROR connecting to: ' + process.env.MONGODB_URI + '. ' + err);
+  console.log ('ERROR connecting to: ' + uri + '. ' + err);
   } else {
-  console.log ('Succeeded connected to: ' + process.env.MONGODB_URI);
+  console.log ('Succeeded connected to: ' + uri);
   }
 });
 
