@@ -8,10 +8,10 @@ export class RatingSubmissionForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      error: false,
+      error: true,
       text: '',
       wordCount: 0,
-      rating: 0
+      rating: null
     }
     this.onChange = this.onChange.bind(this);
     this.errorCheck = this.errorCheck.bind(this);
@@ -26,7 +26,7 @@ export class RatingSubmissionForm extends Component{
 
   async setRating(value){
     await this.setState({rating: value})
-    console.log(this.state.rating)
+    await this.errorCheck()
   }
 
   async submit(){
@@ -44,7 +44,11 @@ export class RatingSubmissionForm extends Component{
     let error = false;
 
     if(this.state.wordCount > this.props.wordLimit){
-      error = true
+      error = true;
+    }
+
+    if(this.state.rating === null){
+      error = true;
     }
 
     await this.setState({error})

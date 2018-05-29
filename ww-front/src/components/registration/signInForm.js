@@ -57,7 +57,7 @@ export class SignInForm extends Component {
     }
 
     return(
-      <div>
+      <div className='form-container'>
         Sign In
         <FormInputWithFeatures 
           onChange={this.onChange} 

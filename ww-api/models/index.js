@@ -15,7 +15,9 @@ let uri = `mongodb://${user}:${pass}@${host}:${port}`;
 if (nconf.get('mongoDatabase')) {
   uri = `${uri}/${nconf.get('mongoDatabase')}`;
 }
-console.log(uri);
+
+// local
+uri="mongodb://localhost/ww-api"
 
 mongoose.connect(uri, function (err, res) {
   if (err) {

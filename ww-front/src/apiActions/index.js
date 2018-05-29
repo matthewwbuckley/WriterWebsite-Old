@@ -2,8 +2,8 @@ import { registerUser, signInUser, refreshAuth, logout } from './auth';
 import { submit, get, getFull, getAll } from './piece';
 import { submitToPiece } from './rating';
 
-//export const apiURL = 'http://localhost:8080/api/';
-export const apiURL = 'https://backend-dot-writer-205511.appspot.com/api'
+export const apiURL = 'http://localhost:8080/api/';
+// export const apiURL = 'https://backend-dot-writer-205511.appspot.com/api'
 export let appRef = null;
 
 // the reference to the app is set by calling this function in the app

@@ -52,6 +52,7 @@
   border-top: 1px solid #282020;
   border-bottom: 1px solid #282020;
   max-height: 100%;
+
 }
 
 .rating-container.hide{
@@ -64,6 +65,7 @@
 
 .push-up{
   position: relative;
+  margin: 0 ;
   top: -16px;
 }
 
@@ -95,6 +97,7 @@
   padding: 4px;
   justify-content: center;
   text-align: center;
+  width: 300px;
 }
 
 .comment .rating-button {

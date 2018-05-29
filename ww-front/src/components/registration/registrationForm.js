@@ -90,7 +90,7 @@ export class RegistrationForm extends Component {
 
   render(){
     return(
-      <div>
+      <div className='form-container'>
         Registration
         <FormInputWithFeatures 
           onChange={this.onChange} 

@@ -107,25 +107,27 @@ class Piece extends Component{
        
 
       return(
-        <div className='content'>
-          <div className='content-left'>
-            <PieceDisplay 
-              author = {this.state.piece.author.username}
-              authorId = {this.state.piece.author._id}
-              title = {piece.title}
-              text = {piece.text}
-              datePublished = {formattedDate}
-            />
-            <div className='rating-container'>
-              {ratingSubmission}
+        <div className='content-container'>
+          <div className='content'>
+            <div className='content-left'>
+              <PieceDisplay 
+                author = {this.state.piece.author.username}
+                authorId = {this.state.piece.author._id}
+                title = {piece.title}
+                text = {piece.text}
+                datePublished = {formattedDate}
+              />
+              <div className='rating-container'>
+                {ratingSubmission}
+              </div>
+              <div className={this.state.revealed ? 'rating-container show' : 'rating-container hide'}>
+                {ratings}
+              </div>
+              {revealButton}
             </div>
-            <div className={this.state.revealed ? 'rating-container show' : 'rating-container hide'}>
-              {ratings}
-            </div>
-            {revealButton}
-          </div>
-          <div className={'content-right'}>
+            <div className={'content-right'}>
 
+            </div>
           </div>
         </div>
       );

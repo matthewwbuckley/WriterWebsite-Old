@@ -15,7 +15,7 @@ export const registerUser = async function registerUser(form, username, password
   })
   .then((res) => {
     if(res.ok){
-      signInUser(username, password);
+      signInUser(form, username, password);
       appRef.setState({redirect: true});
     } else {
       let errorMessage = `Registration Failed. 

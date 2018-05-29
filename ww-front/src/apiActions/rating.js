@@ -20,6 +20,7 @@ export const submitToPiece = function submitRatingToPiece(form, pieceId, userId,
     if(!!rating.error){
       form.setState({error: rating.error})
     } else {
+      window.location.reload();
       form.setState({rating});
     }
   })
