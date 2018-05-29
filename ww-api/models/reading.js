@@ -12,19 +12,20 @@ const readingSchema = new mongoose.Schema({
   },
   title:{
     type: String,
-    required: true
+
   },
   text:{
     type: String,
-    required: true
+
   },
   audio:{
     type: String,
-    required: true
+
   },
   author:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   datePublished:{
     type:Date,

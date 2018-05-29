@@ -1,6 +1,7 @@
 require("dotenv").config();
 var express = require("express");
 var bodyParser=require("body-parser");
+var fileUpload=require('express-fileupload');
 
 var authMiddleware = require("./middleware/auth");
 var errorHandler = require("./routes/helpers/error");
@@ -25,7 +26,9 @@ var app = express();
 app.use(allowCrossDomain);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(fileUpload());
 app.set("view engine", "ejs");
+
 
 // DATABASE CONFIG
 // cut from models/index.js

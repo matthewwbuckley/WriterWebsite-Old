@@ -1,5 +1,6 @@
 import { registerUser, signInUser, refreshAuth, logout } from './auth';
 import { submit, get, getFull, getAll } from './piece';
+import { submitRead } from './reading';
 import { submitToPiece } from './rating';
 
 export const apiURL = 'http://localhost:8080/api/';
@@ -43,6 +44,11 @@ export const getFullPiece = function getFullPiece(...args){
 
 export const getAllPieces = function getAllPieces(...args){
   getAll(...args);
+}
+
+// READING CALLS
+export const submitReading = function submitReading(...args){
+  submitRead(...args);
 }
 
 // RATING CALLS

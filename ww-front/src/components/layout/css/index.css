@@ -91,16 +91,22 @@ main{
 
 .content-container::-webkit-scrollbar
 {
-	width: 6px;
+	width: 8px;
 	background-color: #fffaf7;
 }
 
 .content-container::-webkit-scrollbar-thumb
 {
-  background-color: #282020;
+  /* background-color: #282020;
   border-left: 3px solid tomato;
   border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px
+  border-bottom-left-radius: 10px */
+
+
+  background-color: tomato;
+  border: 2px solid #fffaf7;
+  border-radius: 10px;
+
 }
 
 .content {

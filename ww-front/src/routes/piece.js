@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { PieceDisplay } from '../components/piece/piece';
 import { RatingSubmissionForm } from '../components/piece/ratingSubmissionForm';
 import { getPiece } from '../apiActions/index';
-import { Comment } from '../components/piece/comment'
-import '../components/piece/css/index.css'
+import { Comment } from '../components/piece/comment';
+import { FileUpload } from '../components/form/fileUpload';
+import '../components/piece/css/index.css';
 
 
 class Piece extends Component{
@@ -126,7 +127,7 @@ class Piece extends Component{
               {revealButton}
             </div>
             <div className={'content-right'}>
-
+              <FileUpload {...this.props}/>
             </div>
           </div>
         </div>

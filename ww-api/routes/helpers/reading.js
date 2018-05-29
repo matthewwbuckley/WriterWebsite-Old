@@ -24,11 +24,25 @@ exports.getReading = async function(req, res, next){
 
 exports.createReading = async function(req, res, next){
   try{
-    let reading = await DB.Reading.create(req.body);
+    let data = {
+      author: req.body.author
+    }
+
+    let reading = await DB.Reading.create(data);
+    console.log(reading);
+
+    req.files.file.mv(`./${reading._id}.mp4`, function(err){
+      if(err){
+        console.log(err)
+      } else {
+        console.log('moved the file?')
+      }
+    })
+
     // updating the user to add the new reading
     let user = await DB.User.findById(req.body.author);
     user.readings.push(reading);
-    return res.status(201).json(user);
+    return res.status(201).json(reading);
   } catch(err) {
     return next(err);
   }
