@@ -12,7 +12,6 @@ const readingSchema = new mongoose.Schema({
   },
   title:{
     type: String,
-
   },
   text:{
     type: String,
@@ -22,7 +21,7 @@ const readingSchema = new mongoose.Schema({
     type: String,
 
   },
-  author:{
+  userId:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
@@ -80,4 +79,4 @@ const readingSchema = new mongoose.Schema({
   ]
 })
 
-module.exports = mongoose.model('reading', readingSchema);
+module.exports = mongoose.model('Reading', readingSchema);

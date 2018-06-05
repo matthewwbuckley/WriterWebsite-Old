@@ -1,12 +1,12 @@
 import { apiURL, appRef } from './index';
 
-export const submitRead = function submitRead(form, file, userId){
+export const submitRead = function submitRead(form, file, userId, pieceId){
   const submitURL = apiURL + 'reading/';
   console.log(file, userId)
   var data = new FormData()
   data.append('file', file)
-  data.append('author', userId)
-
+  data.append('userId', userId)
+  data.append('pieceId', pieceId)
 
   
   fetch(submitURL, {

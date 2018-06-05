@@ -7,7 +7,6 @@ exports.createRating = async function(req, res, next){
     const weekInMilliseconds = 604800000;
     const dayInMilliseconds = 86400000;
 
-    console.log(req.body)
 
     let yearCount, monthCount, weekCount, dayCount = 0;
     let yearAvg, monthAvg, weekAvg, dayAvg = 0;
@@ -19,7 +18,7 @@ exports.createRating = async function(req, res, next){
       comment: req.body.comment
     }
 
-    console.log(ratingObject)
+    console.log('Rating OBject:',ratingObject)
 
     if(ratingObject.pieceId){
       if(ratingObject.readingId){
@@ -31,10 +30,11 @@ exports.createRating = async function(req, res, next){
     } else {
       if(ratingObject.readingId){
         ratingObject.readingId = req.body.readingId;
+      } else {
+        let err = new Error('Attempting to rate Nothing');
+        err.status = 400;
+        throw err;
       }
-      let err = new Error('Attempting to rate Nothing');
-      err.status = 400;
-      throw err;
     }
 
     // check that the rating is in the correct range
@@ -85,11 +85,17 @@ exports.createRating = async function(req, res, next){
 
     // update the reading if applicable with new rating
     if(ratingObject.readingId){
-      let reading = await DB.reading.findById(ratingObject.readingId);
+      console.log('Rating OBject:',ratingObject)
+      let reading = await DB.Reading.findById(ratingObject.readingId);
+      let readingFull = await DB.Reading.findById(ratingObject.readingId).populate('ratings.all');
       reading.ratings.all.push(rating._id);
+      readingFull.ratings.all.push(rating._id);
+
       // loop through to count and update average for each time braket
-      reading.ratings.all.forEach(rating => {
-        let rate = rating.populate('Rating');
+      reading.ratings.all.forEach((rating, index) => {
+        let rate = readingFull.ratings.all[index];
+        let dateCreated = new Date(rate.dateCreated);
+
         if(rate.dateCrated > Date.now() - yearInMilliseconds){
           reading.count.year += 1;
           reading.ratings.average.year = ((reading.ratings.average.year * (reading.ratings.count.year - 1)) + rate.rating) / reading.ratings.count.year;

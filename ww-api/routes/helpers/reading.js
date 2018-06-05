@@ -25,13 +25,13 @@ exports.getReading = async function(req, res, next){
 exports.createReading = async function(req, res, next){
   try{
     let data = {
-      author: req.body.author
+      userId: req.body.userId
     }
 
     let reading = await DB.Reading.create(data);
     console.log(reading);
 
-    req.files.file.mv(`./${reading._id}.mp4`, function(err){
+    req.files.file.mv(`./audio/${reading._id}.mp3`, function(err){
       if(err){
         console.log(err)
       } else {
@@ -40,8 +40,15 @@ exports.createReading = async function(req, res, next){
     })
 
     // updating the user to add the new reading
-    let user = await DB.User.findById(req.body.author);
+    let user = await DB.User.findById(req.body.userId);
     user.readings.push(reading);
+    user.save();
+
+    // updating the piece to add the new reading
+    let piece = await DB.Piece.findById(req.body.pieceId);
+    piece.readings.push(reading);
+    piece.save();
+
     return res.status(201).json(reading);
   } catch(err) {
     return next(err);

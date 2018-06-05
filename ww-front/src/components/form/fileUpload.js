@@ -23,8 +23,8 @@ export class FileUpload extends Component {
   }
 
   handleUpload(e){
-    e.preventDefault()
-    submitReading(this, this.state.file, this.props.app.state.user.userId)
+    // e.preventDefault()
+    submitReading(this, this.state.file, this.props.app.state.user.userId, this.props.match.params.pieceId);
   }
 
   async errorCheck(){
@@ -51,7 +51,7 @@ export class FileUpload extends Component {
             {this.state.filename}
           </div>
           <div className='form-container-right'>
-          <FormButton isActive={!this.state.error} text='Submit Reading' onClick={this.onClick} />
+          <FormButton isActive={!this.state.error} text='Submit Reading' onClick={this.handleUpload} />
           </div>
         </form>
       </div>

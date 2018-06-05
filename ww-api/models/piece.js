@@ -33,6 +33,10 @@ const pieceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Series'
   },
+  readings:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Reading'
+  }],
   ratings:{
     all:[
       {

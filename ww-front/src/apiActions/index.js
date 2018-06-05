@@ -1,7 +1,7 @@
 import { registerUser, signInUser, refreshAuth, logout } from './auth';
 import { submit, get, getFull, getAll } from './piece';
 import { submitRead } from './reading';
-import { submitToPiece } from './rating';
+import { submitToPiece, submitToReading } from './rating';
 
 export const apiURL = 'http://localhost:8080/api/';
 // export const apiURL = 'https://backend-dot-writer-205511.appspot.com/api'
@@ -54,4 +54,8 @@ export const submitReading = function submitReading(...args){
 // RATING CALLS
 export const submitRating = function submitRating(...args){
   submitToPiece(...args);
+}
+
+export const submitReadRating = function submitReadRating(...args){
+  submitToReading(...args);
 }

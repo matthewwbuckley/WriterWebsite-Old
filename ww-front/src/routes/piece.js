@@ -3,6 +3,7 @@ import { PieceDisplay } from '../components/piece/piece';
 import { RatingSubmissionForm } from '../components/piece/ratingSubmissionForm';
 import { getPiece } from '../apiActions/index';
 import { Comment } from '../components/piece/comment';
+import { ReadingList } from '../components/readings/readingList';
 import { FileUpload } from '../components/form/fileUpload';
 import '../components/piece/css/index.css';
 
@@ -63,6 +64,7 @@ class Piece extends Component{
     let ratingSubmission = '';
     let ratings = [];
     let revealButton = '';
+    let readings = '';
     // gets new piece if page is changed but this does not unmount
     if(this.state.piece && (this.state.piece._id !== this.props.match.params.pieceId)){
       if(this.state.revealed){
@@ -80,6 +82,7 @@ class Piece extends Component{
       if(!this.state.user){
         this.setState({user: true}, this.refreshPiece(this.props.app.state.user.userId))
       }
+      
       
       if(this.state.piece){
         if(this.hasUserRated()){
@@ -101,36 +104,44 @@ class Piece extends Component{
       revealButton = (<button className='form-button secondary push-up' onClick={this.revealRatings}>{this.state.revealed ? 'Hide Comments' : 'Show Comments'}</button>)
     }
 
+
+    if(this.state.piece && this.state.piece.readings){
+      readings = <ReadingList readings={this.state.piece.readings} {...this.props}/>
+    }
+
     if(this.state.piece){
       const piece = this.state.piece;
-      
       const formattedDate = this.formatDate(piece.datePublished);
-       
+      let fileSelect = '';
+      if(this.state.user){
+        fileSelect = (<FileUpload {...this.props}/>)
+      } 
 
       return(
-        <div className='content-container'>
-          <div className='content'>
-            <div className='content-left'>
-              <PieceDisplay 
-                author = {this.state.piece.author.username}
-                authorId = {this.state.piece.author._id}
-                title = {piece.title}
-                text = {piece.text}
-                datePublished = {formattedDate}
-              />
-              <div className='rating-container'>
-                {ratingSubmission}
-              </div>
-              <div className={this.state.revealed ? 'rating-container show' : 'rating-container hide'}>
-                {ratings}
-              </div>
-              {revealButton}
+        
+        <div className='content'>
+          <div className='content-left'>
+            <PieceDisplay 
+              author = {this.state.piece.author.username}
+              authorId = {this.state.piece.author._id}
+              title = {piece.title}
+              text = {piece.text}
+              datePublished = {formattedDate}
+            />
+            <div className='rating-container'>
+              {ratingSubmission}
             </div>
-            <div className={'content-right'}>
-              <FileUpload {...this.props}/>
+            <div className={this.state.revealed ? 'rating-container show' : 'rating-container hide'}>
+              {ratings}
             </div>
+            {revealButton}
+          </div>
+          <div className={'content-right'}>
+            {fileSelect}
+            {readings}
           </div>
         </div>
+        
       );
     }
 

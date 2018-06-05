@@ -33,6 +33,8 @@
 
 .piece-text{
   text-align: justify;
+  margin: 0 auto;
+  max-width: 300px;
 }
 
 .rating-container{
@@ -107,4 +109,37 @@
 
 .comment-info{
   font-size: 14px;
+}
+
+
+/* AUDIO PLAYER */
+
+audio {
+  margin:8px;
+}
+
+audio::-webkit-media-controls-panel{
+  background-color: #fffaf7;
+  border-radius: 2px;
+  border: 1px solid #4285f4;
+  border-left: 4px double #4285f4;
+  border-right: 4px double #4285f4;
+}
+
+.readingsContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.audioButton{
+  background-color: tomato;
+  flex-direction: column;
+  display: flex;
+  border: none;
+  outline:none;
+  padding: 8px;
+  border-radius: 2px;
+  margin:4px;
 }

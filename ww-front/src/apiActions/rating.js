@@ -25,3 +25,29 @@ export const submitToPiece = function submitRatingToPiece(form, pieceId, userId,
     }
   })
 }
+
+
+export const submitToReading = function submitRatingToReading(form, readingId, userId, rating){
+  const submitURL = apiURL + 'rating/';
+  console.log(form, readingId, userId, rating);
+  fetch(submitURL, {
+    method: 'post',
+    headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify({
+      rating,
+      readingId,
+      userId,
+    })
+  })
+  .then(res => res.json())
+  .then((rating) => {
+    if(!!rating.error){
+      form.setState({error: rating.error})
+    } else {
+      window.location.reload();
+      form.setState({rating});
+    }
+  })
+}
