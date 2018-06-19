@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { RatingSelect } from '../piece/ratingSelect'
 import { submitReadRating } from '../../apiActions'
+import Player from './player'
+import ReactPlayer from 'react-player'
+
 
 export class Reading extends Component{
   constructor(props){
@@ -42,6 +45,19 @@ export class Reading extends Component{
     this.setState({rated:rated})
   }
 
+  getGetOrdinal(n) {
+    var s=["th","st","nd","rd"],
+    v=n%100;
+    return n+(s[(v-20)%10]||s[v]||s[0]);
+  }
+
+  formatDate(dateString){
+    const date = new Date(dateString);
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septemper', 'October', 'November', 'December'];
+    const formattedDate = `${this.getGetOrdinal(date.getUTCDate())} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+    return formattedDate;
+  } 
+
 
 
   render(){
@@ -56,17 +72,18 @@ export class Reading extends Component{
       rate = <RatingSelect onClick={this.onClick}/>
     }
 
+    let dateSubmitted = this.formatDate(this.props.reading.datePublished)
+
     return(
-      <div>
-        <div>
+      <div className='audio'>
+        <div style={{transform: 'scale(0.9)'}}>
           {rate}
         </div>
-        <audio id='player' controls>
-            <source src="http://storage.googleapis.com/writer-205511.appspot.com/photocopy-machine-daniel_simon.mp3" type="audio/mp3" />
-          </audio>
-        <div className='piece-info'>
-          by {username}
+        <Player />
+        <div className='reading-info'>
+          Read on the {dateSubmitted} by {username}
         </div>
+        
       </div>
 
     )
