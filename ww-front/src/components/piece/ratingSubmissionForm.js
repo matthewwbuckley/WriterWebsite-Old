@@ -1,74 +1,87 @@
 import React, { Component } from 'react';
-import { TextArea } from '../form/textArea'
-import { FormButton } from '../form/button'
-import { RatingSelect } from './ratingSelect';
-import { submitRating } from '../../apiActions'
+import FormTextArea from '../form/FormTextArea';
+import FormButton from '../form/FormButton';
+import RatingSelect from './RatingSelect';
+import { submitRating } from '../../apiActions';
 
-export class RatingSubmissionForm extends Component{
-  constructor(props){
+class RatingSubmissionForm extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       error: true,
       text: '',
       wordCount: 0,
-      rating: null
-    }
+      rating: null,
+    };
+
     this.onChange = this.onChange.bind(this);
     this.errorCheck = this.errorCheck.bind(this);
     this.setRating = this.setRating.bind(this);
     this.submit = this.submit.bind(this);
   }
 
-  async onChange(variable, value){
-    await this.setState({[variable]: value})
-    await this.errorCheck()
+  async onChange(variable, value) {
+    await this.setState({ [variable]: value });
+    await this.errorCheck();
   }
 
-  async setRating(value){
-    await this.setState({rating: value})
-    await this.errorCheck()
+  async setRating(value) {
+    await this.setState({ rating: value });
+    await this.errorCheck();
   }
 
-  async submit(){
+  async submit() {
+    const { rating, text } = this.state;
+    const {
+      wordLimit,
+      match: { params: { pieceId } },
+      app: { state: { user: { userId } } },
+    } = this.props;
     submitRating(
       this,
-      this.props.match.params.pieceId,
-      this.props.app.state.user.userId,
-      this.state.rating,
-      this.state.text,
-      this.props.wordLimit
-    )
+      pieceId,
+      userId,
+      rating,
+      text,
+      wordLimit,
+    );
   }
 
-  async errorCheck(){
+  async errorCheck() {
     let error = false;
+    const { wordCount, rating } = this.state;
+    const { wordLimit } = this.props;
 
-    if(this.state.wordCount > this.props.wordLimit){
+    if (wordCount > wordLimit) {
       error = true;
     }
 
-    if(this.state.rating === null){
+    if (rating === null) {
       error = true;
     }
 
-    await this.setState({error})
+    await this.setState({ error });
   }
 
-  render(){
-    return(
-    <div>
-      <RatingSelect onClick={this.setRating} />
-      <TextArea 
-        variable='text' 
-        wordLimit={this.props.wordLimit} 
-        placeholder='Optionally, submit a comment with your rating.'
-        onChange={this.onChange} 
-      />
-      <div className='form-container-right'>
-        <FormButton text='Submit Rating' isActive={!this.state.error} onClick={this.submit}/>
-        
+  render() {
+    const { wordLimit } = this.props;
+    const { error } = this.state;
+
+    return (
+      <div className="rating-form-container">
+        <RatingSelect onClick={this.setRating} />
+        <FormTextArea
+          variable="text"
+          wordLimit={wordLimit}
+          placeholder="Optionally, submit a comment with your rating."
+          onChange={this.onChange}
+        />
+        <div className="form-container-right">
+          <FormButton text="Submit Rating" isActive={!error} onClick={this.submit} />
+        </div>
       </div>
-    </div>
-    )
+    );
   }
 }
+
+export default RatingSubmissionForm;

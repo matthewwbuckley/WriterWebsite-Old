@@ -1,16 +1,15 @@
-var express = require("express");
-var router = express.Router();
-var DB = require("../models");
-var helper = require("./helpers/user");
+const express = require('express');
 
+const router = express.Router();
+require('../models');
+const helper = require('./helpers/user');
 
-
-router.route("/")
+router.route('/')
   .post(helper.createUser);
 
 
 // routes for a single user
-router.route("/:userId")
+router.route('/:userId')
   .get(helper.getUser);
 
 

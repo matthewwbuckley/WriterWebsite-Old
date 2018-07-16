@@ -1,86 +1,81 @@
 const mongoose = require('mongoose');
 
-const User = require('./user');
-const Reading = require('./reading');
-const Series = require('./series');
-const Rating = require('./rating');
-const Tag = require('./tag');
+// I do not assign these values as the value is not used
+// TODO: remove reading
+require('./user');
+require('./reading');
+require('./series');
+require('./rating');
 
 const pieceSchema = new mongoose.Schema({
-  title:{
+  title: {
     type: String,
-    required: true
+    required: true,
   },
-  text:{
+  text: {
     type: String,
-    required: true
+    required: true,
   },
-  author:{
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
-  wordLimit:{
+  wordLimit: {
     type: Number,
-    required: true
+    required: true,
   },
-  datePublished:{
-    type:Date,
+  datePublished: {
+    type: Date,
     default: Date.now,
-    required: true
+    required: true,
   },
-  series:{
+  series: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Series'
+    ref: 'Series',
   },
-  readings:[{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Reading'
-  }],
-  ratings:{
-    all:[
+  readings: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Reading',
+    },
+  ],
+  ratings: {
+    all: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Rating'
-      }
+        ref: 'Rating',
+      },
     ],
-    averages:{
-      week:{
-        type:Number,
-        default: 0
+    averages: {
+      week: {
+        type: Number,
+        default: 0,
       },
-      month:{
-        type:Number,
-        default: 0
+      month: {
+        type: Number,
+        default: 0,
       },
-      year:{
-        type:Number,
-        default: 0
-      }
+      year: {
+        type: Number,
+        default: 0,
+      },
     },
-    count:{
-      week:{
-        type:Number,
-        default: 0
+    count: {
+      week: {
+        type: Number,
+        default: 0,
       },
-      month:{
-        type:Number,
-        default: 0
+      month: {
+        type: Number,
+        default: 0,
       },
-      year:{
-        type:Number,
-        default: 0
-      }
-    } 
+      year: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
-  tags:[
-    {
-      id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tag'
-      }
-    }
-  ],
-})
+});
 
 module.exports = mongoose.model('Piece', pieceSchema);

@@ -5,6 +5,7 @@
   "dependencies": {
     "amplitudejs": "^3.2.3",
     "basscss": "^8.0.2",
+    "lodash": "^4.17.10",
     "plyr": "^3.3.9",
     "react": "^16.3.2",
     "react-audio-player": "^0.10.0",
@@ -22,5 +23,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.10.0"
   }
 }

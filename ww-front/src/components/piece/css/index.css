@@ -37,6 +37,11 @@
   max-width: 300px;
 }
 
+.rating-form-container {
+  max-width: 300px;
+  width:100%;
+}
+
 .rating-container{
   display: flex;
   flex-wrap: wrap-reverse;
@@ -72,34 +77,53 @@
 }
 
 .rating-button {
-  font-size: 18px;
-  letter-spacing: -1px;
-  padding:6px;
+  display: flex;
+  align: center;
+  justify-content: center;
+  width:24px;
+  height:24px;
   margin: 4px;
   /* border-radius: 2px;
   color: #fff;
   border: 1px solid #282020;
   background-color: #282020; */
-  color: #282020;
-  border: none;
   background-color: transparent;
-  min-width: 20px;
+  border: none;
+  border-radius: 100%;
   outline:none;
 
   -webkit-transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-.rating-button.selected{
+.rating-button i{
+  color: #282020;
+}
+
+.rating-button.selected i{
   color: tomato;
 }
+
+i.size1{
+  font-size: 12px;
+}
+
+i.size2{
+  font-size: 16px;
+}
+
+i.size3{
+  font-size: 20px;
+}
+
 
 .comment {
   margin: 8px;
   padding: 4px;
+  box-sizing: border-box;
   justify-content: center;
   text-align: center;
-  width: 300px;
+  width: 40%;
 }
 
 .comment .rating-button {

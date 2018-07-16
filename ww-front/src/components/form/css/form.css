@@ -171,8 +171,8 @@
 
 .form-text-area:focus{
   outline: none;
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-right: 4px double tomato;
   border-left: 4px double tomato;
 }

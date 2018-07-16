@@ -1,10 +1,11 @@
-var express = require("express");
-var router = express.Router();
-var fs = require("fs");
-var DB = require("../models");
-var helper = require("./helpers/rating");
+const express = require('express');
 
-router.route("/")
+const router = express.Router();
+require('fs');
+require('../models');
+const helper = require('./helpers/rating');
+
+router.route('/')
   .post(helper.createRating);
 
 module.exports = router;

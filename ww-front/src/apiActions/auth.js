@@ -1,87 +1,102 @@
-import { apiURL, appRef } from './index';
-
-export const registerUser = async function registerUser(form, username, password, email){
-  const registerURL = apiURL + 'auth/register';
-  fetch(registerURL, {
+export const signInUser = function signInUser(apiURL, appRef, form, username, password) {
+  const loginURL = `${apiURL}auth/signin`;
+  fetch(loginURL, {
     method: 'post',
     headers: new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     }),
     body: JSON.stringify({
       username,
       password,
-      email
-    })
-  })
-  .then((res) => {
-    if(res.ok){
-      signInUser(form, username, password);
-      appRef.setState({redirect: true});
-    } else {
-      let errorMessage = `Registration Failed. 
-      - Username must be unique
-      - Password must be over 8 characters long
-      - Email must be unique and valid`
-      form.setState({error: errorMessage});
-    }
-  })
-}
+    }),
+  }).then(
+    res => res.json(),
+  ).then(
+    (info) => {
+      if (info.error) {
+        form.setState({ error: info.error });
+      } else {
+        localStorage.setItem('token', info.token);
+        appRef.setState({ redirect: true });
+        // info.userId NOT info.userID <- set by JWT
+        appRef.setState({
+          user: { userId: info.userID, username: info.username, token: info.token },
+        });
+      }
+    },
+  );
+};
 
-export const signInUser = function signInUser(form, username, password){
-  const loginURL = apiURL + 'auth/signin';
-  fetch(loginURL, {
+export const registerUser = async function registerUser(
+  apiURL,
+  appRef,
+  form,
+  username,
+  password,
+  email,
+) {
+  const registerURL = `${apiURL}auth/register`;
+  fetch(registerURL, {
     method: 'post',
     headers: new Headers({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     }),
     body: JSON.stringify({
       username,
-      password
-    })
-  })
-  .then(res => res.json())
-  .then((info) => {
-    if(!!info.error){
-      form.setState({error: info.error})
+      password,
+      email,
+    }),
+  }).then((res) => {
+    if (res.ok) {
+      signInUser(form, username, password);
+      appRef.setState({ redirect: true });
     } else {
-      console.log(info)
-      localStorage.setItem('token', info.token);
-      appRef.setState({user: {userId:info.userID, username: info.username, token: info.token}})  //info.userId NOT info.userID <- set by JWT
+      const errorMessage = `Registration Failed. 
+      - Username must be unique
+      - Password must be over 8 characters long
+      - Email must be unique and valid`;
+      form.setState({ error: errorMessage });
     }
-  })
-}
+  });
+};
 
-export const refreshAuth = function refreshAuth(){
-  if(!localStorage.getItem('token')) {
+export const refreshAuth = function refreshAuth(apiURL, appRef) {
+  const refreshURL = `${apiURL}auth/refresh`;
 
-  } else {
-    console.log(localStorage.token)
-    const refreshURL = apiURL + 'auth/refresh'
-    fetch(refreshURL,{
-      method: 'post',
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      }),
-      body: JSON.stringify({
-        token: localStorage.getItem('token')
-      })
-    })
-    .then((res) => res.json())
-    .then((info) => {
-      if(!!info.error){
-
-      } else {
-        appRef.setState({user: {userId:info.userID, username: info.username, token: info.token}})  //info.userId NOT info.userID <- set by JWT
-      }
-    })
-    .catch(function(err){
-      console.log(err);
-    })
+  // localStorage.getItem returns string "undefined" not undefined
+  let token = null;
+  if (localStorage.getItem('token') !== 'undefined') {
+    token = localStorage.getItem('token');
   }
-  
-}
+  fetch(refreshURL, {
+    method: 'post',
+    headers: new Headers({
+      'Content-Type': 'application/json',
+    }),
+    body: JSON.stringify({
+      token,
+    }),
+  }).then(
+    res => res.json(),
+  ).then(
+    (info) => {
+      if (info.error) {
+        console.log(info.error);
+      } else if (info.token) {
+        // info.userId NOT info.userID <- set by JWT
+        appRef.setState({
+          user: { userId: info.userID, username: info.username, token: info.token },
+        });
+      } else {
+        appRef.setState({
+          user: null,
+        });
+      }
+    },
+  );
+};
 
-export const logout = function logout(){
+export const logout = function logout(apiURL, appRef) {
   localStorage.token = undefined;
-  appRef.setState({user: undefined});
-}
+  appRef.setState({ user: undefined });
+};

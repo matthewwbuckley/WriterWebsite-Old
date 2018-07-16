@@ -1,67 +1,52 @@
 import React from 'react';
 
-export const Comment = ({rating, comment, username, date}) => {
+const Comment = ({
+  rating,
+  comment,
+  username,
+  date,
+}) => {
   let ratingDisplay = null;
-  if(rating === 3){
+  if (rating === 3) {
     ratingDisplay = (
-      <div className='rating-button'>
-        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-      </div>
-    )
+      <i className="fa fa-plus-circle size3" aria-hidden="true" />
+    );
   }
-  if(rating === 2){
+  if (rating === 2) {
     ratingDisplay = (
-      <div className='rating-button'>
-        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-      </div>
-    )
+      <i className="fa fa-plus-circle size2" aria-hidden="true" />
+    );
   }
-  if(rating === 1){
+  if (rating === 1) {
     ratingDisplay = (
-      <div className='rating-button'>
-        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-      </div>
-    )
+      <i className="fa fa-plus-circle size1" aria-hidden="true" />
+    );
   }
-  if(rating === 0){
+  if (rating === 0) {
     ratingDisplay = (
-      <div className='rating-button'>
-        <i class="fa fa-circle-o" aria-hidden="true"></i>
-      </div>
-    )
+      <i className="fa fa-circle-o size2" aria-hidden="true" />
+    );
   }
-  if(rating === -1){
+  if (rating === -1) {
     ratingDisplay = (
-      <div className='rating-button'>
-        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-      </div>
-    )
+      <i className="fa fa-minus-circle size1" aria-hidden="true" />
+    );
   }
-  if(rating === -2){
+  if (rating === -2) {
     ratingDisplay = (
-      <div className='rating-button'>
-        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-      </div>
-    )
+      <i className="fa fa-minus-circle size2" aria-hidden="true" />
+    );
   }
-  if(rating === -3){
+  if (rating === -3) {
     ratingDisplay = (
-      <div className='rating-button'>
-        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-        <i class="fa fa-minus-circle" aria-hidden="true"></i>
-      </div>
-    )
+      <i className="fa fa-minus-circle size3" aria-hidden="true" />
+    );
   }
-  
-  return(
-    <div className='comment'>
+
+  return (
+    <div className="comment">
       {ratingDisplay}
-      <div className='comment-info'>
+      <div className="comment-info">
         <div>
           {username}
         </div>
@@ -69,9 +54,11 @@ export const Comment = ({rating, comment, username, date}) => {
           {date}
         </div>
       </div>
-      <div className='comment-text'>
+      <div className="comment-text">
         {comment}
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Comment;

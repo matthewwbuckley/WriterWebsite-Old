@@ -1,82 +1,73 @@
 const mongoose = require('mongoose');
 
-const User = require('./user');
-const Piece = require('./piece'); 
-const Rating = require('./rating');
-const Tag = require('./tag');
+require('./user');
+require('./piece');
+require('./rating');
 
 const readingSchema = new mongoose.Schema({
-  piece:{
+  piece: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Piece'
+    ref: 'Piece',
   },
-  title:{
+  title: {
     type: String,
   },
-  text:{
-    type: String,
-
-  },
-  audio:{
+  text: {
     type: String,
 
   },
-  userId:{
+  audio: {
+    type: String,
+
+  },
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
-  datePublished:{
-    type:Date,
+  datePublished: {
+    type: Date,
     default: Date.now,
-    required: true
+    required: true,
   },
-  ratings:{
-    all:[
+  ratings: {
+    all: [
       {
         id: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Rating'
-        }
-      }
+          ref: 'Rating',
+        },
+      },
     ],
-    averages:{
-      week:{
-        type:Number,
-        default: 0
+    averages: {
+      week: {
+        type: Number,
+        default: 0,
       },
-      month:{
-        type:Number,
-        default: 0
+      month: {
+        type: Number,
+        default: 0,
       },
-      year:{
-        type:Number,
-        default: 0
-      }
+      year: {
+        type: Number,
+        default: 0,
+      },
     },
-    count:{
-      week:{
-        type:Number,
-        default: 0
+    count: {
+      week: {
+        type: Number,
+        default: 0,
       },
-      month:{
-        type:Number,
-        default: 0
+      month: {
+        type: Number,
+        default: 0,
       },
-      year:{
-        type:Number,
-        default: 0
-      }
-    }  
+      year: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
-  tags:[
-    {
-      id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Tag'
-      }
-    }
-  ]
-})
+});
 
 module.exports = mongoose.model('Reading', readingSchema);

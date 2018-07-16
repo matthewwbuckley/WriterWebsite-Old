@@ -1,36 +1,36 @@
 const mongoose = require('mongoose');
 
-const User = require('./user');
-const Piece = require('./piece'); 
-const Reading = require('./reading');
+require('./user');
+require('./piece');
+require('./reading');
 
 const ratingSchema = new mongoose.Schema({
   rating: {
     type: Number,
-    required: true
+    required: true,
   },
   comment: {
     type: String,
-    default: ''
+    default: '',
   },
   dateCreated: {
     type: Date,
     required: true,
-    default: Date.now
+    default: Date.now,
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
   },
   pieceId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Piece'
+    ref: 'Piece',
   },
   readingId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Reading'
-  }
-})
+    ref: 'Reading',
+  },
+});
 
 module.exports = mongoose.model('Rating', ratingSchema);

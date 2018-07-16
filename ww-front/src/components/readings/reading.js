@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { RatingSelect } from '../piece/ratingSelect'
+import { RatingSelect } from '../piece/RatingSelect'
 import { submitReadRating } from '../../apiActions'
 import Player from './player'
 import ReactPlayer from 'react-player'

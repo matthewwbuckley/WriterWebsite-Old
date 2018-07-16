@@ -1,27 +1,31 @@
-import { apiURL, appRef } from './index';
-
-export const submitRead = function submitRead(form, file, userId, pieceId){
-  const submitURL = apiURL + 'reading/';
-  console.log(file, userId)
-  var data = new FormData()
-  data.append('file', file)
-  data.append('userId', userId)
-  data.append('pieceId', pieceId)
-
-  
+// TODO: remove
+export const submitRead = function submitRead(
+  apiURL,
+  appRef,
+  form,
+  file,
+  userId,
+  pieceId,
+) {
+  const submitURL = `${apiURL}reading/`;
+  const data = new FormData();
+  data.append('file', file);
+  data.append('userId', userId);
+  data.append('pieceId', pieceId);
   fetch(submitURL, {
     method: 'post',
-    // headers: new Headers({
-    //   'Content-Type': 'application/json'
-    // }),
-    body: data
-  })
-  .then(res => res.json())
-  .then((piece) => {
-    if(!!piece.error){
-      form.setState({error: piece.error})
-    } else {
-      form.setState({piece});
-    }
-  })
-}
+    body: data,
+  }).then(
+    res => res.json(),
+  ).then(
+    (piece) => {
+      if (piece.error) {
+        form.setState({ error: piece.error });
+      } else {
+        form.setState({ piece });
+      }
+    },
+  );
+};
+
+export default submitRead;
