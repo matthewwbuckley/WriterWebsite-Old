@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 require('./user');
 require('./piece');
-require('./reading');
 
 const ratingSchema = new mongoose.Schema({
   rating: {
@@ -26,10 +25,6 @@ const ratingSchema = new mongoose.Schema({
   pieceId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Piece',
-  },
-  readingId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Reading',
   },
 });
 

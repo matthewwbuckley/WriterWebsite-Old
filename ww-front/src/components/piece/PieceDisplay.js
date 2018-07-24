@@ -4,7 +4,7 @@ import './css/index.css';
 
 const PieceDisplay = ({
   author,
-  // authorId,
+  authorId,
   datePublished,
   title,
   text,
@@ -16,7 +16,7 @@ const PieceDisplay = ({
     <div className="piece-info">
       <div className="piece-info">
         { `Published  ${datePublished}  by `}
-        <Link to="/">
+        <Link to={`/user/${authorId}`}>
           {author}
         </Link>
       </div>

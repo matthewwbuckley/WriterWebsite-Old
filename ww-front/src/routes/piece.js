@@ -52,21 +52,6 @@ class Piece extends Component {
     }
   }
 
-  // hasUserRated() {
-  //   let userRated = false;
-  //   const { piece: { ratings } } = this.state;
-  //   const { app: { state: { user: userId } } } = this.props;
-
-  //   ratings.all.forEach(({ rating }) => {
-  //     if (rating && rating.userId) {
-  //       if (rating.userId._id === userId) {
-  //         userRated = true;
-  //       }
-  //     }
-  //   });
-  //   return userRated;
-  // }
-
   render() {
     let ratingSubmission = '';
     let ratings = [];
@@ -82,6 +67,10 @@ class Piece extends Component {
     const pieceId = get(this.props, 'match.params.pieceId', null);
     const propsUser = get(this.props, 'app.state.user', null);
 
+    // These next two if blocks are an antipatern - i should not be using setState in render
+    // would be solved if the navigation could speak to the piece page, solved by Redux.
+    // I am considering this to be too time consuming to correct when the solution
+    // is planned for my next project.
     // gets new piece if page is changed but this does not unmount
     if (piece && (piece._id !== pieceId)) {
       if (revealed) {
@@ -117,6 +106,7 @@ class Piece extends Component {
               comment={rating.comment}
               username={rating.userId.username}
               date={date}
+              key={rating._id}
             />
           );
         });

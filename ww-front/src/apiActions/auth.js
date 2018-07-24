@@ -81,7 +81,10 @@ export const refreshAuth = function refreshAuth(apiURL, appRef) {
   ).then(
     (info) => {
       if (info.error) {
-        console.log(info.error);
+        // I think I should ne nulling out the user here
+        appRef.setState({
+          user: null,
+        });
       } else if (info.token) {
         // info.userId NOT info.userID <- set by JWT
         appRef.setState({

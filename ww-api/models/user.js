@@ -3,9 +3,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 require('./piece');
-require('./reading');
-require('./playlist');
-require('./series');
 require('./rating');
 
 const userSchema = new mongoose.Schema({
@@ -35,24 +32,6 @@ const userSchema = new mongoose.Schema({
       ref: 'Piece',
     },
   ],
-  readings: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Reading',
-    },
-  ],
-  playlists: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Playlist',
-    },
-  ],
-  series: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Series',
-    },
-  ],
   ratings: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -72,7 +51,7 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
   const user = this;
   if (!user.isModified('password')) {
     return next();

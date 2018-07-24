@@ -34,7 +34,12 @@ exports.signIn = async (req, res, next) => {
       });
     });
   } catch (err) {
-    return next(err);
+    return res.status(404).json({
+      userID: null,
+      username: null,
+      token: null,
+      error: 'Incorrect Username or Password',
+    });
   }
 };
 
@@ -67,9 +72,7 @@ exports.refresh = async (req, res, next) => {
     let newToken = null;
     let user = { username: null, _id: null };
 
-    console.log('TOKEN', token, token === "undefined");
     if (!token) {
-      console.log('THERE IS NO TOKEN')
       return res.status(200).json({
         username: null,
         userID: null,

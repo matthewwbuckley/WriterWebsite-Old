@@ -18,11 +18,9 @@ class Write extends Component {
   render() {
     const { wordLimit } = this.state;
     const info = `
+The piece can be 100, 200, or 400 words long. 
 
-
-Please take care to check that the piece before submission. This site does not allow editing post publication.
-The piece can be added to a series once published.
-Once submitted readings can be made of your work.`;
+Please take care to check that the piece before submission. This site does not allow editing or deletion post publication.`;
 
     return (
       <div className="content">
@@ -36,6 +34,5 @@ Once submitted readings can be made of your work.`;
     );
   }
 }
-
 
 export default Write;

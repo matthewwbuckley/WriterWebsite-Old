@@ -29,7 +29,4 @@ mongoose.connect(uri, (err, res) => {
 
 module.exports.User = require('./user');
 module.exports.Piece = require('./piece');
-module.exports.Reading = require('./reading');
-module.exports.Playlist = require('./playlist');
 module.exports.Rating = require('./rating');
-module.exports.Series = require('./series');

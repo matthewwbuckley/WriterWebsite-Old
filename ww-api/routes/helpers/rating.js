@@ -8,16 +8,13 @@ exports.createRating = async (req, res, next) => {
     const dayInMilliseconds = 86400000;
 
     // comment is not required
-    // TODO: remove readings
     const ratingObject = {
       userId: req.body.userId,
       pieceId: req.body.pieceId,
       rating: req.body.rating,
       comment: req.body.comment || null,
     };
-    console.log("object", ratingObject)
 
-    // TODO: refactor to remove reading
     if (ratingObject.pieceId) {
       ratingObject.pieceId = req.body.pieceId;
     } else {

@@ -72,7 +72,14 @@ class SignInForm extends Component {
         }}
         className="form-container"
       >
-        {'Sign In'}
+        <div className="title-container">
+          <div className="title-text">
+            {'Sign In'}
+          </div>
+          <div className="error-text">
+            {error}
+          </div>
+        </div>
         <FormInputWithFeatures
           onChange={this.onChange}
           variable="username"
@@ -89,7 +96,7 @@ class SignInForm extends Component {
           error={errorPassword}
         />
         <div className="form-container-right">
-          <FormButton isActive={!error} text="Sign In" onClick={this.onClick} />
+          <FormButton isActive={!error} text="Sign In" onClick={() => { return null; }} />
         </div>
       </form>
     );

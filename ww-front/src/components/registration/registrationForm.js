@@ -119,7 +119,14 @@ class RegistrationForm extends Component {
         }}
         className="form-container"
       >
-        { 'Registration' }
+        <div className="title-container">
+          <div className="title-text">
+            {'Register'}
+          </div>
+          <div className="error-text">
+            {error}
+          </div>
+        </div>
         <FormInputWithFeatures
           onChange={this.onChange}
           variable="username"
@@ -151,7 +158,7 @@ class RegistrationForm extends Component {
           error={errorEmail}
         />
         <div className="form-container-right">
-          <FormButton submit isActive={!error} text="Register" onClick={this.onClick} />
+          <FormButton submit isActive={!error} text="Register" onClick={() => { return null; }} />
         </div>
       </form>
     );

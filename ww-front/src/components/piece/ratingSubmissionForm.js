@@ -31,20 +31,22 @@ class RatingSubmissionForm extends Component {
   }
 
   async submit() {
-    const { rating, text } = this.state;
+    const { rating, text, error } = this.state;
     const {
       wordLimit,
       match: { params: { pieceId } },
       app: { state: { user: { userId } } },
     } = this.props;
-    submitRating(
-      this,
-      pieceId,
-      userId,
-      rating,
-      text,
-      wordLimit,
-    );
+    if (!error) {
+      submitRating(
+        this,
+        pieceId,
+        userId,
+        rating,
+        text,
+        wordLimit,
+      );
+    }
   }
 
   async errorCheck() {

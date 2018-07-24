@@ -57,11 +57,18 @@ main{
   outline: none;
 }
 
+i {
+  font-size: 10px;;
+}
+
 .navigation i {
   color: tomato;
   margin: 0 8px;
   cursor: pointer;
+  font-size: 20px;
 }
+
+
 
 .pieces-list{
   display: flex;
@@ -75,6 +82,13 @@ main{
   flex-direction: row;
   align-content: flex-start;
   font-size: 18px;
+}
+
+.pagination-container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 
@@ -147,6 +161,10 @@ main{
     min-width: 100%;
   }
 
+  .navigation i {
+    font-size: 24px;
+  }
+
   @media only screen and (max-width: 600px) {
     .navigation,
     .main,
@@ -154,6 +172,10 @@ main{
       min-width: 100%;
       height: auto;
       max-height: none;
+    }
+
+    .navigation i {
+      font-size: 28px;
     }
   
   }

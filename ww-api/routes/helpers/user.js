@@ -45,23 +45,4 @@ exports.getAllPiecesByAuthor = async (req, res, next) => {
   }
 };
 
-
-// TODO: remove
-exports.getAllReadingsByAuthor = async (req, res, next) => {
-  try {
-    const user = await DB.User.findById(req.params.userId);
-
-    if (!user) {
-      const err = new Error('User not found!');
-      err.status = 404;
-      throw err;
-    }
-
-    const allReadings = await DB.Reading.find({ author: user._id });
-    return res.status(200).json(allReadings);
-  } catch (err) {
-    return next(err);
-  }
-};
-
 module.exports = exports;

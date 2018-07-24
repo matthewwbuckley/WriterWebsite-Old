@@ -219,3 +219,18 @@
 .span-highlight{
   color: tomato;
 }
+
+
+
+.title-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-text{
+  font-weight: 600;
+}
+
+.error-text{
+  color: tomato;
+}

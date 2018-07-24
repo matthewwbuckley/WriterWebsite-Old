@@ -8,36 +8,93 @@ export class Navigation extends Component {
     super(props);
     this.state = {
       sort: 'recent',
+      page: 1,
+      isLast: false,
     };
     this.setSort = this.setSort.bind(this);
+    this.changePage = this.changePage.bind(this);
   }
 
   async componentWillMount() {
-    const { sort } = this.state;
-    await getAllPieces(this, sort);
+    const { sort, page } = this.state;
+    await getAllPieces(this, sort, page);
   }
 
   async setSort(sort) {
-    this.setState({ sort });
-    getAllPieces(this, sort);
+    this.setState({ sort, page: 1 });
+    getAllPieces(this, sort, 1);
+  }
+
+  async changePage(isNext) {
+    let { page } = this.state;
+    const { sort } = this.state;
+
+    if (isNext) {
+      page += 1;
+      await this.setState({ page });
+    } else {
+      page -= 1;
+      await this.setState({ page });
+    }
+    await getAllPieces(this, sort, page);
   }
 
   render() {
-    const { pieces } = this.state;
+    const { pieces, page, isLast } = this.state;
     let display = '';
+    let piecePagination = '';
 
-    // TODO: move this to its own functional component
+    // TODO: move this to its own functional component? seems simple enough
     if (pieces) {
       display = pieces.map((piece) => {
         const pieceURL = `/piece/${piece._id}`;
         return (
-          <div>
+          <div key={piece._id}>
             <Link to={pieceURL}>
               {piece.title}
             </Link>
           </div>
         );
       });
+    }
+
+    if (page === 1) {
+      piecePagination = (
+        <div className="pagination-container">
+          <div />
+          <i
+            onClick={() => { this.changePage(true); }}
+            className="fa fa-chevron-circle-right"
+            aria-hidden="true"
+          />
+        </div>
+      );
+    } else if (isLast) {
+      piecePagination = (
+        <div className="pagination-container">
+          <i
+            onClick={() => { this.changePage(false); }}
+            className="fa fa-chevron-circle-left"
+            aria-hidden="true"
+          />
+          <div />
+        </div>
+      );
+    } else {
+      piecePagination = (
+        <div className="pagination-container">
+          <i
+            onClick={() => { this.changePage(false); }}
+            className="fa fa-chevron-circle-left"
+            aria-hidden="true"
+          />
+          <i
+            onClick={() => { this.changePage(true); }}
+            className="fa fa-chevron-circle-right"
+            aria-hidden="true"
+          />
+        </div>
+      );
     }
 
     return (
@@ -83,16 +140,20 @@ export class Navigation extends Component {
             </i>
           </div>
           {display}
+          {piecePagination}
         </div>
       </div>
     );
   }
 }
 
-const UserNavigation = ({ username }) => (
+const UserNavigation = ({ username, userId }) => (
   <div>
     <div>
-      { `Hello ${username}.` }
+      { 'Hello ' }
+      <Link to={`/user/${userId}`}>
+        { `${username}.` }
+      </Link>
       <button type="button" onClick={logoutUser}>
         { 'Logout?' }
       </button>
@@ -114,11 +175,9 @@ const SignIn = () => (
 
 const UserNav = (props) => {
   try {
-    const { app: { state: user } } = props;
-    const { username, userId, token } = user.user;
-    console.log('token', props, user, token);
-    if (token) {
-      return <UserNavigation {...props} username={username} userId={userId} />;
+    const { app: { state: { user } } } = props;
+    if (user && user.token) {
+      return <UserNavigation {...props} username={user.username} userId={user.userId} />;
     }
     return <SignIn />;
   } catch (e) {

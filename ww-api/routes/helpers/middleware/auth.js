@@ -1,8 +1,6 @@
 const JWT = require('jsonwebtoken');
 const DB = require('../../../models');
 
-
-// this is a function which checks the token.
 exports.tokenCheck = async function tokenCheckAuthMiddleware(req, res, next) {
   try {
     const token = req.body.token || req.query.token;
@@ -39,3 +37,5 @@ exports.tokenCheck = async function tokenCheckAuthMiddleware(req, res, next) {
     return next(err);
   }
 };
+
+module.exports = exports;

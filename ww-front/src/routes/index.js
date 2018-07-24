@@ -5,7 +5,7 @@ import Home from './Home';
 import Registration from './registration';
 import Write from './write';
 import Piece from './piece';
-
+import UserPage from './UserPage';
 
 export default class Routes extends Component {
   // After consultation with someone on discord
@@ -36,6 +36,7 @@ export default class Routes extends Component {
           <Route exact path="/registration" render={props => <Registration {...props} app={app} />} />
           <Route exact path="/write" render={props => <Write {...props} app={app} />} />
           <Route exact path="/piece/:pieceId" render={props => <Piece {...props} app={app} />} />
+          <Route exact path="/user/:userId" render={props => <UserPage {...props} app={app} />} />
         </Switch>
       </main>
     );

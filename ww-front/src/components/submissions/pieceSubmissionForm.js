@@ -38,10 +38,10 @@ class PieceSubmissionForm extends Component {
       error,
       title,
       text,
+      wordLimit,
     } = this.state;
 
     const {
-      wordLimit,
       app: { state: { user: { userId } } },
     } = this.props;
 
@@ -126,7 +126,14 @@ class PieceSubmissionForm extends Component {
 
     return (
       <div className="form-container">
-        {'Piece Submission'}
+        <div className="title-container">
+          <div className="title-text">
+            {'Piece Submission'}
+          </div>
+          <div className="error-text">
+            {error}
+          </div>
+        </div>
         <FormInputWithFeatures
           onChange={this.onChange}
           variable="title"

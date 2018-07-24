@@ -5,11 +5,15 @@ import Page from './components/layout/page';
 import { setAppRef, refresh } from './apiActions';
 
 class App extends Component {
-  componentWillMount() {
-    setAppRef(this);
+  constructor(props) {
+    super(props);
     this.state = {
       redirect: false,
     };
+  }
+
+  componentWillMount() {
+    setAppRef(this);
     refresh();
   }
 

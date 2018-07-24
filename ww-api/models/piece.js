@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 // I do not assign these values as the value is not used
 // TODO: remove reading
 require('./user');
-require('./reading');
-require('./series');
 require('./rating');
 
 const pieceSchema = new mongoose.Schema({
@@ -30,16 +28,6 @@ const pieceSchema = new mongoose.Schema({
     default: Date.now,
     required: true,
   },
-  series: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Series',
-  },
-  readings: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Reading',
-    },
-  ],
   ratings: {
     all: [
       {

@@ -7,10 +7,9 @@ import {
 import {
   submit,
   get,
-  getFull,
   getAll,
+  getAllByAuthor,
 } from './piece';
-import { submitRead } from './reading';
 import { submitToPiece, submitToReading } from './rating';
 
 export const apiURL = 'http://localhost:8080/api/';
@@ -48,17 +47,12 @@ export const getPiece = function getPiece(...args) {
   get(apiURL, appRef, ...args);
 };
 
-export const getFullPiece = function getFullPiece(...args) {
-  getFull(apiURL, appRef, ...args);
-};
-
 export const getAllPieces = function getAllPieces(...args) {
   getAll(apiURL, appRef, ...args);
 };
 
-// READING CALLS
-export const submitReading = function submitReading(...args) {
-  submitRead(apiURL, appRef, ...args);
+export const getUserPieces = function getUserPieces(...args) {
+  getAllByAuthor(apiURL, appRef, ...args);
 };
 
 // RATING CALLS
