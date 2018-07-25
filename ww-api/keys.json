@@ -1,0 +1,7 @@
+{
+  "mongoHost": "ds233500.mlab.com",
+  "mongoPort": "33500",
+  "mongoDatabase": "writerdb",
+  "mongoUser": "matthewwbuckley",
+  "mongoPass": "002216logon"
+}
