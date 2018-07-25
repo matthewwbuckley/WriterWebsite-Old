@@ -1,118 +1,90 @@
-const DB = require("../../models");
+const DB = require('../../models');
 
-exports.createRating = async function(req, res, next){
+exports.createRating = async (req, res, next) => {
   try {
     const yearInMilliseconds = 31556952000;
     const monthInMilliseconds = 2592000000;
     const weekInMilliseconds = 604800000;
     const dayInMilliseconds = 86400000;
 
-    console.log(req.body)
+    // comment is not required
+    const ratingObject = {
+      userId: req.body.userId,
+      pieceId: req.body.pieceId,
+      rating: req.body.rating,
+      comment: req.body.comment || null,
+    };
 
-    let yearCount, monthCount, weekCount, dayCount = 0;
-    let yearAvg, monthAvg, weekAvg, dayAvg = 0;
-    let ratingObject = {
-      userId:req.body.userId,
-      pieceId:req.body.pieceId,
-      readingId:req.body.readingId,
-      rating:req.body.rating,
-      comment: req.body.comment
-    }
-
-    console.log(ratingObject)
-
-    if(ratingObject.pieceId){
-      if(ratingObject.readingId){
-        let err = new Error('Attempting to rate Piece and Reading');
-        err.status = 400;
-        throw err;
-      }
+    if (ratingObject.pieceId) {
       ratingObject.pieceId = req.body.pieceId;
     } else {
-      if(ratingObject.readingId){
-        ratingObject.readingId = req.body.readingId;
-      }
-      let err = new Error('Attempting to rate Nothing');
+      const err = new Error('Attempting to rate Nothing');
       err.status = 400;
       throw err;
     }
 
     // check that the rating is in the correct range
-    if (ratingObject.rating<-3 || ratingObject.rating>3){
-      let err = new Error('Rating out of range!');
+    if (ratingObject.rating < -3 || ratingObject.rating > 3) {
+      const err = new Error('Rating out of range!');
       err.status = 400;
       throw err;
     }
-
-    let rating = await DB.Rating.create(ratingObject);
     
+    const rating = await DB.Rating.create(ratingObject);
     // update the piece if applicable with new rating
-    if(ratingObject.pieceId){
-      let piece = await DB.Piece.findById(ratingObject.pieceId);
-      let pieceFull = await DB.Piece.findById(ratingObject.pieceId).populate('ratings.all');
+    if (ratingObject.pieceId) {
+      // piece will be saved
+      // piece full contains all the reviews to update week/month/year info
+      const piece = await DB.Piece.findById(ratingObject.pieceId);
+      const pieceFull = await DB.Piece.findById(ratingObject.pieceId).populate('ratings.all');
+
       piece.ratings.all.push(rating._id);
       pieceFull.ratings.all.push(rating);
-      console.log(pieceFull.ratings.all)
-      
-      // zero out before counting again
-      piece.ratings.count = { week: 0, month: 0, year: 0 }
-      piece.ratings.averages = { week: 0, month: 0, year: 0 }
-      // loop through to count and update average for each time braket
-      piece.ratings.all.forEach((rating, index) => {
-        let rate = pieceFull.ratings.all[index];
-        let dateCreated = new Date(rate.dateCreated);
 
-        if( dateCreated > Date.now() - yearInMilliseconds){
-          piece.ratings.count.year += 1;
-          piece.ratings.averages.year = ((piece.ratings.averages.year * (piece.ratings.count.year - 1)) + rate.rating) / piece.ratings.count.year;
-          if(dateCreated > Date.now() - monthInMilliseconds){
-            piece.ratings.count.month += 1;
-            piece.ratings.averages.month = ((piece.ratings.averages.month * (piece.ratings.count.month - 1)) + rate.rating) / piece.ratings.count.month;
-            if(dateCreated > Date.now() - weekInMilliseconds){
-              piece.ratings.count.week += 1;
-              piece.ratings.averages.week = ((piece.ratings.averages.week * (piece.ratings.count.week - 1)) + rate.rating) / piece.ratings.count.week;
-              if(dateCreated > Date.now() - dayInMilliseconds){
-                piece.ratings.count.day += 1;
-                piece.ratings.averages.day = ((piece.ratings.averages.day * (piece.ratings.count.day - 1)) + rate.rating) / piece.ratings.count.day;
+      // zero out before counting again
+      const count = { week: 0, month: 0, year: 0 };
+      const averages = { week: 0, month: 0, year: 0 };
+
+      // loop through to count and update average for each time bracket
+      pieceFull.ratings.all.forEach((pastRating) => {
+        // const rate = pieceFull.ratings.all[index];
+        const dateCreated = new Date(pastRating.dateCreated);
+
+        // TODO: for averages - summing and then averaging at the end would be slightly quicker
+        if (dateCreated > Date.now() - yearInMilliseconds) {
+          count.year += 1;
+          averages.year = (
+            (averages.year * (count.year - 1)) + pastRating.rating
+          ) / count.year;
+          if (dateCreated > Date.now() - monthInMilliseconds) {
+            count.month += 1;
+            averages.month = (
+              (averages.month * (count.month - 1)) + pastRating.rating
+            ) / count.month;
+            if (dateCreated > Date.now() - weekInMilliseconds) {
+              count.week += 1;
+              averages.week = (
+                (averages.week * (count.week - 1)) + pastRating.rating
+              ) / count.week;
+              if (dateCreated > Date.now() - dayInMilliseconds) {
+                count.day += 1;
+                averages.day = (
+                  (averages.day * (count.day - 1)) + pastRating.rating
+                ) / count.day;
               }
             }
           }
         }
       });
-
+      piece.ratings.count = count;
+      piece.ratings.averages = averages;
       await piece.save();
     }
 
-    // update the reading if applicable with new rating
-    if(ratingObject.readingId){
-      let reading = await DB.reading.findById(ratingObject.readingId);
-      reading.ratings.all.push(rating._id);
-      // loop through to count and update average for each time braket
-      reading.ratings.all.forEach(rating => {
-        let rate = rating.populate('Rating');
-        if(rate.dateCrated > Date.now() - yearInMilliseconds){
-          reading.count.year += 1;
-          reading.ratings.average.year = ((reading.ratings.average.year * (reading.ratings.count.year - 1)) + rate.rating) / reading.ratings.count.year;
-          if(rate.dateCrated > Date.now() - monthInMilliseconds){
-            reading.count.month += 1;
-            reading.ratings.average.month = ((reading.ratings.average.month * (reading.ratings.count.month - 1)) + rate.rating) / reading.ratings.count.month;
-            if(rate.dateCrated > Date.now() - weekInMilliseconds){
-              reading.count.week += 1;
-              reading.ratings.average.week = ((reading.ratings.average.week * (reading.ratings.count.week - 1)) + rate.rating) / reading.ratings.count.week;
-              if(rate.dateCrated > Date.now() - dayInMilliseconds){
-                reading.count.day += 1;
-                reading.ratings.average.day = ((reading.ratings.average.day * (reading.ratings.count.day - 1)) + rate.rating) / reading.ratings.count.day;
-              }
-            }
-          }
-        }
-      });
-
-      await reading.save();
-    }
-
     return res.status(201).json(rating);
-  } catch(err) {
+  } catch (err) {
     return next(err);
   }
-}
+};
+
+module.exports = exports;

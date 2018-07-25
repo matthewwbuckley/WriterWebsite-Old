@@ -1,17 +1,15 @@
-var express = require("express");
-var router = express.Router();
-var fs = require("fs");
-var DB = require("../models");
-var helper = require("./helpers/piece");
+const express = require('express');
 
-router.route("/")
+const router = express.Router();
+require('fs');
+require('../models');
+const helper = require('./helpers/piece');
+
+router.route('/')
   .get(helper.getAllPieces)
   .post(helper.createPiece);
 
-router.route("/:pieceId")
-  .get(helper.getPiece)
-
-  router.route("/:pieceId/full")
-  .get(helper.getPieceFull)
+router.route('/:pieceId')
+  .get(helper.getPiece);
 
 module.exports = router;

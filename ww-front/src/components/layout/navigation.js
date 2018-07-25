@@ -1,126 +1,189 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './css/index.css';
-import { logoutUser } from '../../apiActions'
-import { getAllPieces } from '../../apiActions'
+import { logoutUser, getAllPieces } from '../../apiActions';
 
 export class Navigation extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      sort: 'recent'
-    } 
+      sort: 'recent',
+      page: 1,
+      isLast: false,
+    };
     this.setSort = this.setSort.bind(this);
+    this.changePage = this.changePage.bind(this);
   }
 
-  async componentWillMount(){
-    await getAllPieces(this)
+  async componentWillMount() {
+    const { sort, page } = this.state;
+    await getAllPieces(this, sort, page);
   }
 
-  setSort(sort){
-    this.setState({sort: sort})
+  async setSort(sort) {
+    this.setState({ sort, page: 1 });
+    getAllPieces(this, sort, 1);
   }
 
-  render(){
-    let pieces = '';
- 
-    if(this.state.pieces){
-      let sortedPieces = this.state.pieces;
-      if(this.state.sort === 'recent'){
-        sortedPieces.sort((a,b) => recentSort(a,b))
-      } else if(this.state.sort === 'week'){
-        sortedPieces.sort((a,b) => ratingWeekSort(a,b))
-      } else if(this.state.sort === 'month'){
-        sortedPieces.sort((a,b) => ratingMonthSort(a,b))
-      } else if(this.state.sort === 'year'){
-        sortedPieces.sort((a,b) => ratingYearSort(a,b))
-      }
-      console.log(sortedPieces);
+  async changePage(isNext) {
+    let { page } = this.state;
+    const { sort } = this.state;
 
-      pieces = sortedPieces.map( (piece) => {
-        const pieceURL = '/piece/' + piece._id;
-        return(
-          <div>
+    if (isNext) {
+      page += 1;
+      await this.setState({ page });
+    } else {
+      page -= 1;
+      await this.setState({ page });
+    }
+    await getAllPieces(this, sort, page);
+  }
+
+  render() {
+    const { pieces, page, isLast } = this.state;
+    let display = '';
+    let piecePagination = '';
+
+    // TODO: move this to its own functional component? seems simple enough
+    if (pieces) {
+      display = pieces.map((piece) => {
+        const pieceURL = `/piece/${piece._id}`;
+        return (
+          <div key={piece._id}>
             <Link to={pieceURL}>
               {piece.title}
             </Link>
           </div>
-        )
-      })
+        );
+      });
     }
 
-    return(
-      <div className='navigation'>
-        <Link to='/'>Fancy Home Link</Link>
-        <UserNav {...this.props} />
-        <div  className='pieces-list'>
-          <div className='pieces-list-header'> 
-            Pieces
-            <i onClick={()=>{this.setSort('recent')}} class="fa fa-clock-o" aria-hidden="true"></i>
-            <i onClick={()=>{this.setSort('week')}}  class="fa fa-heart" aria-hidden="true"><span className='icon-inset'>W</span></i>
-            <i onClick={()=>{this.setSort('month')}}  class="fa fa-heart" aria-hidden="true"><span className='icon-inset'>M</span></i>
-            <i onClick={()=>{this.setSort('year')}}  class="fa fa-heart" aria-hidden="true"><span className='icon-inset'>Y</span></i>
+    if (page === 1) {
+      piecePagination = (
+        <div className="pagination-container">
+          <div />
+          <i
+            onClick={() => { this.changePage(true); }}
+            className="fa fa-chevron-circle-right"
+            aria-hidden="true"
+          />
+        </div>
+      );
+    } else if (isLast) {
+      piecePagination = (
+        <div className="pagination-container">
+          <i
+            onClick={() => { this.changePage(false); }}
+            className="fa fa-chevron-circle-left"
+            aria-hidden="true"
+          />
+          <div />
+        </div>
+      );
+    } else {
+      piecePagination = (
+        <div className="pagination-container">
+          <i
+            onClick={() => { this.changePage(false); }}
+            className="fa fa-chevron-circle-left"
+            aria-hidden="true"
+          />
+          <i
+            onClick={() => { this.changePage(true); }}
+            className="fa fa-chevron-circle-right"
+            aria-hidden="true"
+          />
+        </div>
+      );
+    }
 
+    return (
+      <div className="navigation">
+        <Link to="/">
+          { 'Fancy Home Link' }
+        </Link>
+        <UserNav {...this.props} />
+        <div className="pieces-list">
+          <div className="pieces-list-header">
+            { 'Pieces' }
+            <i
+              onClick={() => { this.setSort('recent'); }}
+              className="fa fa-clock-o"
+              aria-hidden="true"
+            />
+            <i
+              onClick={() => { this.setSort('week'); }}
+              className="fa fa-heart"
+              aria-hidden="true"
+            >
+              <span className="icon-inset">
+                { 'W' }
+              </span>
+            </i>
+            <i
+              onClick={() => { this.setSort('month'); }}
+              className="fa fa-heart"
+              aria-hidden="true"
+            >
+              <span className="icon-inset">
+                { 'M' }
+              </span>
+            </i>
+            <i
+              onClick={() => { this.setSort('year'); }}
+              className="fa fa-heart"
+              aria-hidden="true"
+            >
+              <span className="icon-inset">
+                { 'Y' }
+              </span>
+            </i>
           </div>
-          {pieces}
+          {display}
+          {piecePagination}
         </div>
       </div>
-    )
+    );
   }
-  
 }
 
-const UserNavigation = ({props, username, userId}) => {
-  return (
+const UserNavigation = ({ username, userId }) => (
+  <div>
     <div>
-      <div>
-        Hello {username}. <button onClick={logoutUser}>Logout?</button>
-      </div>
-      <div>
-      <Link  to='/write'>Publish a Piece</Link>
-      </div>
+      { 'Hello ' }
+      <Link to={`/user/${userId}`}>
+        { `${username}.` }
+      </Link>
+      <button type="button" onClick={logoutUser}>
+        { 'Logout?' }
+      </button>
     </div>
-  )
-}
+    <div>
+      <Link to="/write">
+        { 'Publish a Piece' }
+      </Link>
+    </div>
+  </div>
+);
 
-const SignIn = () => {
-  return <Link to='/registration'>Sign-up or Register</Link>
-}
+
+const SignIn = () => (
+  <Link to="/registration">
+    { 'Sign-up or Register' }
+  </Link>
+);
 
 const UserNav = (props) => {
-  if(props.app.state && props.app.state.user){
-    let username = props.app.state.user.username;
-    let userId = props.app.state.user.userId;
-    return <UserNavigation {...props} username={username} userId={userId} />
-  } else {
-    return <SignIn/>
+  try {
+    const { app: { state: { user } } } = props;
+    if (user && user.token) {
+      return <UserNavigation {...props} username={user.username} userId={user.userId} />;
+    }
+    return <SignIn />;
+  } catch (e) {
+    console.log(e);
+    return <SignIn />;
   }
-}
-
-const recentSort = function recentSort(a, b){
-  if(a.datePublished && b.datePublished){
-    const aDate = new Date(a.datePublished);
-    const bDate = new Date(b.datePublished);
-    return( bDate - aDate )
-  }
-}
-
-const ratingWeekSort = function ratingWeekSort(a, b){
-  if(a.ratings.averages.week && b.ratings.averages.week){
-    return( b.ratings.averages.week - a.ratings.averages.week )
-  }
-}
-
-const ratingMonthSort = function ratingMonthSort(a, b){
-  if(a.ratings.averages.month && b.ratings.averages.month){
-    return( b.ratings.averages.month - a.ratings.averages.month )
-  }
-}
-
-const ratingYearSort = function ratingYearSort(a, b){
-  if(a.ratings.averages.year && b.ratings.averages.year){
-    return( b.ratings.averages.year - a.ratings.averages.year )
-  }
-}
+};
 
 export default Navigation;

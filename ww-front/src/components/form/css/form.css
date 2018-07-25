@@ -149,16 +149,88 @@
   transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
+.form-text-area::-webkit-scrollbar-track
+{
+	background-color: #fffaf7;
+}
+
+.form-text-area::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #fffaf7;
+}
+
+.form-text-area::-webkit-scrollbar-thumb
+{
+  background-color: tomato;
+  border: 3px solid #fffaf7;
+  border-radius: 10px;
+  
+}
+
+
 .form-text-area:focus{
   outline: none;
-  padding-left: 6px;
-  padding-right: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-right: 4px double tomato;
   border-left: 4px double tomato;
 }
 
+/* INPUTS */
+#file{
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.file + label {
+  font-family: Karma;
+  letter-spacing: 1px;
+  padding:6px;
+  border-radius: 2px;
+  min-width: 100px;
+
+  color: #282020;
+  border: 1px solid #282020;
+  background-color: #fffaf7;
+  font-size: 14px;
+
+  -webkit-transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.file:focus + label,
+.file + label:hover {
+  color: tomato;
+  /* border: 1px solid transparent; */
+}
+
+.file + label:hover {
+  cursor: pointer;
+}
+
+
 /* SPANS */
 
 .span-highlight{
+  color: tomato;
+}
+
+
+
+.title-container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.title-text{
+  font-weight: 600;
+}
+
+.error-text{
   color: tomato;
 }

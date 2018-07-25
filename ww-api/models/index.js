@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const nconf = require('nconf');
 
 nconf.argv().env().file('keys.json');
@@ -15,20 +15,18 @@ let uri = `mongodb://${user}:${pass}@${host}:${port}`;
 if (nconf.get('mongoDatabase')) {
   uri = `${uri}/${nconf.get('mongoDatabase')}`;
 }
-console.log(uri);
 
-mongoose.connect(uri, function (err, res) {
+// local
+uri = 'mongodb://localhost/ww-api';
+
+mongoose.connect(uri, (err, res) => {
   if (err) {
-  console.log ('ERROR connecting to: ' + uri + '. ' + err);
+    console.log(`ERROR connecting to ${uri} due to ${err}`);
   } else {
-  console.log ('Succeeded connected to: ' + uri);
+    console.log(`Succeeded connected to: ${uri} with ${res}`);
   }
 });
 
 module.exports.User = require('./user');
 module.exports.Piece = require('./piece');
-module.exports.Reading = require('./reading');
-module.exports.Playlist = require('./playlist');
 module.exports.Rating = require('./rating');
-module.exports.Series = require('./series');
-module.exports.Tag = require('./tag');

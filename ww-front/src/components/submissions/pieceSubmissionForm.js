@@ -1,96 +1,161 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { FormInputWithFeatures } from '../form/textInput';
-import { TextArea } from '../form/textArea';
-import { FormButton } from '../form/button';
+import { FormInputWithFeatures } from '../form/FormInput';
+import TextArea from '../form/FormTextArea';
+import FormButton from '../form/FormButton';
 import { submitPiece } from '../../apiActions/index';
 
 
-export class PieceSubmissionForm extends Component {
-  constructor(props){
+class PieceSubmissionForm extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       title: '',
       text: '',
       wordCount: 0,
-      error: true
-    }
+      wordLimit: 100,
+      wordSpread: 10,
+      error: true,
+      lengthError: true,
+    };
 
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
   }
 
-  async componentWillReceiveProps(newProps){
-    await this.setState({wordLimit:newProps.wordLimit})
-    await this.errorCheck()
+  async componentWillReceiveProps(newProps) {
+    await this.setState({ wordLimit: newProps.wordLimit });
+    await this.errorCheck();
   }
 
-  async onChange(variable, value){
-    await this.setState({[variable]: value})
-    await this.errorCheck()
+  async onChange(variable, value) {
+    await this.setState({ [variable]: value });
+    await this.errorCheck();
   }
 
-  async onClick(){
-    if(!this.state.error){
-      await submitPiece(this, this.props.app.state.user.userId, this.state.title, this.state.text, this.props.wordLimit);
-      if (this.state.piece && this.state.piece._id) {
-        window.location = '/piece/' + this.state.piece._id
-      }
+  async onClick() {
+    const {
+      error,
+      title,
+      text,
+      wordLimit,
+    } = this.state;
+
+    const {
+      app: { state: { user: { userId } } },
+    } = this.props;
+
+    if (!error) {
+      await submitPiece(this, userId, title, text, wordLimit);
     }
   }
 
-  async errorCheck(){
-    let errorTitle = '';
-    let errorText = '';
+  async errorCheck() {
+    // let errorTitle = '';
+    // let errorText = '';
     let error = false;
+    let lengthError = false;
+    let { wordLimit, wordSpread } = this.state;
+    let upper = wordLimit + wordSpread;
+    let lower = wordLimit - wordSpread;
+
+    const {
+      title,
+      text,
+      wordCount,
+    } = this.state;
 
     const isFormIncomplete = Boolean(
-      this.state.title.length === 0 ||
-      this.state.text.length === 0 
-    )
+      title.length === 0
+      || text.length === 0,
+    );
 
-    if(isFormIncomplete){
+    if (isFormIncomplete) {
       error = true;
     }
 
-    if(this.state.wordCount > this.state.wordLimit){
+    if (wordCount > 301 && wordLimit !== 400) {
+      wordLimit = 400;
+      wordSpread = 40;
+      upper = wordLimit + wordSpread;
+      lower = wordLimit - wordSpread;
+      this.setState({ wordLimit, wordSpread });
+    }
+
+    if (wordCount < 300 && wordCount > 151 && wordLimit !== 200) {
+      wordLimit = 200;
+      wordSpread = 20;
+      upper = wordLimit + wordSpread;
+      lower = wordLimit - wordSpread;
+      this.setState({ wordLimit, wordSpread });
+    }
+
+    if (wordCount < 150 && wordLimit !== 100) {
+      wordLimit = 100;
+      wordSpread = 10;
+      upper = wordLimit + wordSpread;
+      lower = wordLimit - wordSpread;
+      this.setState({ wordLimit, wordSpread });
+    }
+
+    if (wordCount > upper || wordCount < lower) {
       error = true;
+      lengthError = true;
     }
 
     await this.setState({
-      error
-    })
-
+      error,
+      lengthError,
+    });
   }
 
-  render(){
+  render() {
+    const {
+      pieceId,
+      errorUsername,
+      wordLimit,
+      wordSpread,
+      error,
+      lengthError,
+    } = this.state;
 
-    if(this.state.piece && this.state.piece._id){
-      const redirect = '/piece/' + this.state.piece._id
-      return(<Redirect to={redirect} />)
+    if (pieceId) {
+      const redirect = `/piece/${pieceId}`;
+      return (<Redirect to={redirect} />);
     }
 
-    return(
-      <div className='form-container'>
-        Piece Submission
-        <FormInputWithFeatures 
-          onChange={this.onChange} 
-          variable='title' 
-          placeholder='Title of the Piece' 
-          label='Title'
-          error={this.state.errorUsername}
+    return (
+      <div className="form-container">
+        <div className="title-container">
+          <div className="title-text">
+            {'Piece Submission'}
+          </div>
+          <div className="error-text">
+            {error}
+          </div>
+        </div>
+        <FormInputWithFeatures
+          onChange={this.onChange}
+          variable="title"
+          placeholder="Title of the Piece"
+          label="Title"
+          error={errorUsername}
         />
-        <TextArea 
-          onChange={this.onChange} 
-          variable='text'
-          wordLimit={this.props.wordLimit}
-          placeholder='Please write you piece here ...' 
+        <TextArea
+          onChange={this.onChange}
+          variable="text"
+          wordLimit={wordLimit}
+          wordSpread={wordSpread}
+          error={lengthError}
+          rows={10}
+          placeholder="Please write you piece here ..."
         />
-        <div className='form-container-right'>
-          <FormButton isActive={!this.state.error} text='Publish' onClick={this.onClick} />
+        <div className="form-container-right">
+          <FormButton isActive={!error} text="Publish" onClick={this.onClick} />
         </div>
       </div>
-    )
+    );
   }
-
 }
+
+export default PieceSubmissionForm;

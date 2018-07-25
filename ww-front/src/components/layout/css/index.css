@@ -2,10 +2,11 @@
   padding:0;
   margin:0;
   width: 100%;
-  height: 100vh;
+  
   display: flex;
   flex-direction: row;
   overflow-x: hidden;
+  flex-wrap: wrap;
 }
 
 
@@ -13,12 +14,21 @@
   display: flex;
   flex-direction: column;
   max-height: 100vh;
-  min-width: 240px;
   width: 30%;
   padding: 12px;
   background-color: #282020;
   color: #fffaf7;
   overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.main{
+  width: 70%
+}
+
+main{
+  width: 100%;
+  
 }
 
 .navigation > a {
@@ -47,11 +57,18 @@
   outline: none;
 }
 
+i {
+  font-size: 10px;;
+}
+
 .navigation i {
   color: tomato;
   margin: 0 8px;
   cursor: pointer;
+  font-size: 20px;
 }
+
+
 
 .pieces-list{
   display: flex;
@@ -67,10 +84,14 @@
   font-size: 18px;
 }
 
-main{
+.pagination-container{
   width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+
 
 .main {
   width:70%;
@@ -79,13 +100,47 @@ main{
   flex-grow: 1;
 }
 
+.content-container{
+  min-width: 100%;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+.content-container::-webkit-scrollbar-track
+{
+	background-color: #fffaf7;
+}
+
+.content-container::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #fffaf7;
+}
+
+.content-container::-webkit-scrollbar-thumb
+{
+  /* background-color: #282020;
+  border-left: 3px solid tomato;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px */
+
+
+  background-color: tomato;
+  border: 2px solid #fffaf7;
+  border-radius: 10px;
+
+}
+
 .content {
   display: flex;
   width: 100%;
   box-sizing: border-box; 
+  flex-wrap: wrap;
 }
 
-.content-left {
+.content-left,
+.content-right {
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -93,17 +148,38 @@ main{
   box-sizing: border-box;
   padding:8px;
   min-width: 50%;
+  width:50%;
   white-space: pre-wrap;
+
 }
 
-.content-right {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  box-sizing: border-box;
-  padding:8px;
-  min-width: 50%;
-  white-space: pre-wrap;
+
+
+@media only screen and (max-width: 1200px) {
+  .content-left,
+  .content-right {
+    min-width: 100%;
+  }
+
+  .navigation i {
+    font-size: 24px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .navigation,
+    .main,
+    .content-container {
+      min-width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
+    .navigation i {
+      font-size: 28px;
+    }
+  
+  }
+
 }
 
 .icon-inset{
@@ -115,3 +191,4 @@ main{
   font-size: 14px;
   color: #282020;
 }
+

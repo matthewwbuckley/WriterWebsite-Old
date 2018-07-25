@@ -1,0 +1,24 @@
+{
+    "extends": "airbnb",
+    "rules":{
+       "linebreak-style": 0,
+       "no-underscore-dangle": 0,
+       "react/prop-types": [
+        "enabled",
+        { "ignore": "ignore", "customValidators": "customValidator" }
+      ],
+      "react/jsx-filename-extension": [
+        1, 
+        { "extensions": [".js", ".jsx"] }
+      ],
+      "no-useless-escape": 0
+    },
+    "globals": { 
+      "fetch": false,
+      "Headers": false,
+      "localStorage": false,
+      "window": false,
+      "FormData": false,
+      "document": false
+    }
+}

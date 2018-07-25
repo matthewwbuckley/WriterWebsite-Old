@@ -5,7 +5,7 @@
 .piece-title{
   text-align: center;
   letter-spacing: 1px;
-  font-weight: 500;
+  font-weight: 600;
   margin: 8px 0 0px 0;
 }
 
@@ -16,23 +16,34 @@
   margin: 0px 0 16px 0;
 }
 
-.piece-info a {
+.piece-link{
+  text-align: center;
+  margin: 16px 0px 0px 0;
+}
+
+a {
   color: #282020;
   text-decoration: underline;
 }
 
-.piece-info a:visited {
+a:visited {
   color: #282020;
-  
 }
 
-.piece-info a:hover {
+a:hover {
   color: tomato;
   text-decoration: underline;
 }
 
 .piece-text{
   text-align: justify;
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+.rating-form-container {
+  max-width: 300px;
+  width:100%;
 }
 
 .rating-container{
@@ -52,6 +63,7 @@
   border-top: 1px solid #282020;
   border-bottom: 1px solid #282020;
   max-height: 100%;
+
 }
 
 .rating-container.hide{
@@ -59,42 +71,76 @@
   max-height: 0px;
   border-top: 1px solid #fffaf7;
   border-bottom: 1px solid #282020;
-
 }
 
 .push-up{
   position: relative;
+  margin: 0 ;
   top: -16px;
 }
 
 .rating-button {
-  font-size: 18px;
-  letter-spacing: -1px;
-  padding:6px;
+  display: flex;
+  align: center;
+  justify-content: center;
+  width:24px;
+  height:24px;
   margin: 4px;
   /* border-radius: 2px;
   color: #fff;
   border: 1px solid #282020;
   background-color: #282020; */
-  color: #282020;
-  border: none;
   background-color: transparent;
-  min-width: 20px;
+  border: none;
+  border-radius: 100%;
   outline:none;
 
   -webkit-transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
   transition: border 0.2s ease-in-out, padding 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-.rating-button.selected{
+.rating-button i{
+  color: #282020;
+}
+
+.rating-button.selected i{
   color: tomato;
 }
+
+i.size1{
+  font-size: 12px;
+}
+
+i.size2{
+  font-size: 16px;
+}
+
+i.size3{
+  font-size: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  i.size1{
+    font-size: 14px;
+  }
+  
+  i.size2{
+    font-size: 18px;
+  }
+  
+  i.size3{
+    font-size: 22px;
+  }
+}
+
 
 .comment {
   margin: 8px;
   padding: 4px;
+  box-sizing: border-box;
   justify-content: center;
   text-align: center;
+  width: 40%;
 }
 
 .comment .rating-button {
@@ -105,3 +151,37 @@
 .comment-info{
   font-size: 14px;
 }
+
+
+/* AUDIO PLAYER */
+
+audio {
+  margin:8px;
+}
+
+audio::-webkit-media-controls-panel{
+  background-color: #fffaf7;
+  border-radius: 2px;
+  border: 1px solid #4285f4;
+  border-left: 4px double #4285f4;
+  border-right: 4px double #4285f4;
+}
+
+.readingsContainer{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.audioButton{
+  background-color: tomato;
+  flex-direction: column;
+  display: flex;
+  border: none;
+  outline:none;
+  padding: 8px;
+  border-radius: 2px;
+  margin:4px;
+}
+
