@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import { withRouter, Redirect } from 'react-router-dom';
-import Page from './components/layout/page';
+import Page from './components/layout/Page';
 import { setAppRef, refresh } from './apiActions';
 
 class App extends Component {

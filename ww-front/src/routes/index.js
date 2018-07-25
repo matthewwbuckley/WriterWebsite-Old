@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Home from './Home';
-import Registration from './registration';
-import Write from './write';
-import Piece from './piece';
+import Registration from './Registration';
+import Write from './Write';
+import Piece from './Piece';
 import UserPage from './UserPage';
 
 export default class Routes extends Component {
