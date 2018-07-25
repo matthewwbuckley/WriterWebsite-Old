@@ -17,7 +17,7 @@ if (nconf.get('mongoDatabase')) {
 }
 
 // local
-uri = 'mongodb://localhost/ww-api';
+// uri = 'mongodb://localhost/ww-api';
 
 mongoose.connect(uri, (err, res) => {
   if (err) {
