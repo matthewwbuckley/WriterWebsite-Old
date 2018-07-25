@@ -17,9 +17,5 @@ router.route('/:userId')
 router.route('/:userId/piece/')
   .get(helper.getAllPiecesByAuthor);
 
-// route for all readings by author
-router.route('/:userId/reading/')
-  .get(helper.getAllReadingsByAuthor);
-
 
 module.exports = router;
