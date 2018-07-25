@@ -12,10 +12,11 @@ const host = nconf.get('mongoHost');
 const port = nconf.get('mongoPort');
 
 let uri = `mongodb://${user}:${pass}@${host}:${port}`;
+console.log(uri);
 if (nconf.get('mongoDatabase')) {
   uri = `${uri}/${nconf.get('mongoDatabase')}`;
 }
-
+console.log(uri);
 // local
 // uri = 'mongodb://localhost/ww-api';
 
