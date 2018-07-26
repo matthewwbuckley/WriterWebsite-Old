@@ -2,6 +2,6 @@
   "mongoHost": "ds233500.mlab.com",
   "mongoPort": "33500",
   "mongoDatabase": "writerdb",
-  "mongoUser": "wwdb-admin",
-  "mongoPass": "wwdb-osiris01"
+  "mongoUser": "wwdbadmin",
+  "mongoPass": "wwdbosiris01"
 }

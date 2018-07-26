@@ -43,7 +43,6 @@ const ratingRoutes = require('./routes/rating');
 // ROUTE SET-UP
 // app.use('/api', indexRoutes);
 
-
 app.use('/api/piece', pieceRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
@@ -62,7 +61,7 @@ app.use(errorHandler);
 
 
 // LISTEN ROUTE
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 8081;
 app.listen(port, () => {
   console.log(`The API is listening on port: ${port}`);
 });
