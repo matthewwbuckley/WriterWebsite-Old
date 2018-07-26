@@ -25,21 +25,25 @@ exports.getAllPieces = async (req, res, next) => {
     }
 
     const allPieces = await DB.Piece.find({});
-    const sortedPieces = pieceSort.sort(allPieces, sort);
-    const slicedPieces = sortedPieces.slice((page - 1) * perPage, page * perPage);
+    if (allPieces.length > 0) {
+      const sortedPieces = pieceSort.sort(allPieces, sort);
+      const slicedPieces = sortedPieces.slice((page - 1) * perPage, page * perPage);
 
-    const selectedPieces = slicedPieces.map(piece => (
-      {
-        title: piece.title,
-        _id: piece._id,
-      }));
+      const selectedPieces = slicedPieces.map(piece => (
+        {
+          title: piece.title,
+          _id: piece._id,
+        }));
 
-    // check if results to be returned are the last
-    if (sortedPieces.length < page * perPage + 1) {
-      isLast = true;
+      // check if results to be returned are the last
+      if (sortedPieces.length < page * perPage + 1) {
+        isLast = true;
+      }
+
+      return res.status(200).json({ selectedPieces, isLast });
     }
 
-    return res.status(200).json({ selectedPieces, isLast });
+    return res.status(200).json({ selectedPieces: null, isLast });
   } catch (err) {
     return next(err);
   }

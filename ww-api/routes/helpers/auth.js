@@ -87,7 +87,7 @@ exports.refresh = async (req, res, next) => {
         errMsg.status = 401;
         throw errMsg;
       }
-
+      console.log(userVer);
       // find user data corresponding to that user
       await DB.User.findById(userVer.userID, (errFind, userFind) => {
         if (errFind) {
@@ -96,10 +96,14 @@ exports.refresh = async (req, res, next) => {
           throw errMsg;
         }
 
-        // You can renew token by creating new token but I’m
-        // just passing the old token back.
-        newToken = JWT.sign({ userID: userFind._id }, process.env.SECRET_KEY);
-        user = userFind;
+        if (userFind !== null) {
+          // You can renew token by creating new token but I’m
+          // just passing the old token back.
+          newToken = JWT.sign({ userID: userFind._id }, process.env.SECRET_KEY);
+          user = userFind;
+        } else {
+          newToken = null;
+        }
       });
     });
 
