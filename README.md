@@ -18,3 +18,5 @@ The front end has the following routes:
 - Piece: Displays a short story.
 - Write: Handles short story sumission.
 
+Interaction with the API is done through the scripts in the apiActions folder. 
+
