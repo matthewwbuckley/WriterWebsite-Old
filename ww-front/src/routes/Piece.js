@@ -52,12 +52,7 @@ class Piece extends Component {
     }
   }
 
-  render() {
-    let ratingSubmission = '';
-    let ratings = [];
-    let revealButton = '';
-    let ratingText = '';
-
+  componentDidUpdate() {
     const {
       piece,
       revealed,
@@ -67,11 +62,8 @@ class Piece extends Component {
     const pieceId = get(this.props, 'match.params.pieceId', null);
     const propsUser = get(this.props, 'app.state.user', null);
 
-    // These next two if blocks are an antipatern - i should not be using setState in render
-    // would be solved if the navigation could speak to the piece page, solved by Redux.
-    // I am considering this to be too time consuming to correct when the solution
-    // is planned for my next project.
-    // gets new piece if page is changed but this does not unmount
+    console.log(piece, pieceId)
+
     if (piece && (piece._id !== pieceId)) {
       if (revealed) {
         this.setState({ revealed: false });
@@ -82,12 +74,25 @@ class Piece extends Component {
         this.refreshPiece();
       }
     }
+  }
+
+  render() {
+    let ratingSubmission = '';
+    let ratings = [];
+    let revealButton = '';
+
+    const {
+      piece,
+      revealed,
+      user: stateUser,
+    } = this.state;
+
+    const pieceId = get(this.props, 'match.params.pieceId', null);
+    const propsUser = get(this.props, 'app.state.user', null);
 
     if (propsUser) {
-      if (!stateUser) {
-        this.setState({ user: true }, this.refreshPiece(propsUser.userId));
-      }
       if (piece) {
+        // checks if the user has voted
         if (piece.ratings.count.year === undefined) {
           ratingSubmission = (
             <RatingSubmissionForm {...this.props} wordLimit={piece.wordLimit / 10} />
@@ -161,7 +166,6 @@ class Piece extends Component {
             </div>
             <div className={revealed ? 'rating-container show' : 'rating-container hide'}>
               {ratings}
-              {ratingText}
             </div>
             {revealButton}
           </div>
