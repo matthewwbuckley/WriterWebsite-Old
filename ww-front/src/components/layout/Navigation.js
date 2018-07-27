@@ -41,7 +41,7 @@ export class Navigation extends Component {
 
   render() {
     const { pieces, page, isLast } = this.state;
-    let display = '';
+    let display = 'Loading...';
     let piecePagination = '';
 
     // TODO: move this to its own functional component? seems simple enough

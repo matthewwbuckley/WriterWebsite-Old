@@ -61,7 +61,7 @@ export const get = function getPiece(apiURL, appRef, form, pieceId, userId) {
               dateCreated: null,
               userId: piece.ratings.all[i].userId,
             };
-  
+
             returnedPiece.ratings.all[i] = rating;
           }
           returnedPiece.ratings.count = {};

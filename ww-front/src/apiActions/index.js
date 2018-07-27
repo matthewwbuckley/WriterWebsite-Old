@@ -61,7 +61,3 @@ export const getUserPieces = function getUserPieces(...args) {
 export const submitRating = function submitRating(...args) {
   submitToPiece(apiURL, appRef, ...args);
 };
-
-export const submitReadRating = function submitReadRating(...args) {
-  submitToReading(apiURL, appRef, ...args);
-};

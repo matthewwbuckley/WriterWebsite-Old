@@ -36,37 +36,3 @@ export const submitToPiece = function submitRatingToPiece(
   );
 };
 
-// TODO: remove
-export const submitToReading = function submitRatingToReading(
-  apiURL,
-  appRef,
-  form,
-  readingId,
-  userId,
-  rating,
-) {
-  const submitURL = `${apiURL}rating/`;
-  console.log(form, readingId, userId, rating);
-  fetch(submitURL, {
-    method: 'post',
-    headers: new Headers({
-      'Content-Type': 'application/json',
-    }),
-    body: JSON.stringify({
-      rating,
-      readingId,
-      userId,
-    }),
-  }).then(
-    res => res.json(),
-  ).then(
-    (fullRating) => {
-      if (rating.error) {
-        form.setState({ error: fullRating.error });
-      } else {
-        window.location.reload();
-        form.setState({ fullRating });
-      }
-    },
-  );
-};
