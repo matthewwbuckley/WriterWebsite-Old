@@ -7,7 +7,7 @@ exports.getAllPieces = async (req, res, next) => {
   try {
     const sort = req.query.sort || null;
     const page = req.query.page || 1;
-    const perPage = req.query.perPage || 10;
+    const perPage = req.query.perPage || 20;
     const author = req.query.author || null;
     let isLast = false;
     // const wordLimit = req.query.number || null;
@@ -36,7 +36,7 @@ exports.getAllPieces = async (req, res, next) => {
         }));
 
       // check if results to be returned are the last
-      if (sortedPieces.length < page * perPage + 1) {
+      if (sortedPieces.length < (page * perPage + 1)) {
         isLast = true;
       }
 

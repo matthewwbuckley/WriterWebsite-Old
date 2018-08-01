@@ -51,8 +51,6 @@ class PieceSubmissionForm extends Component {
   }
 
   async errorCheck() {
-    // let errorTitle = '';
-    // let errorText = '';
     let error = false;
     let lengthError = false;
     let { wordLimit, wordSpread } = this.state;

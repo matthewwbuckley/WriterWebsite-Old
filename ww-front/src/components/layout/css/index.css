@@ -40,10 +40,15 @@ main{
 
 .navigation a{
   color: #fffaf7;
+  transition: color 0.3s, text-decoration 0.3s;
 }
 
 .navigation  a:visited {
   color: #BEB2AE;
+}
+
+.navigation  a:hover {
+  color: tomato;
 }
 
 .navigation button{
@@ -67,8 +72,6 @@ i {
   cursor: pointer;
   font-size: 20px;
 }
-
-
 
 .pieces-list{
   display: flex;

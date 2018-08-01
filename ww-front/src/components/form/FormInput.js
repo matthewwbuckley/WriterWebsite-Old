@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { compose } from 'recompose';
 import './css/form.css';
 
-
+// This is the only HOF. Written for practice.
 export class FormInput extends Component {
   constructor(props) {
     super(props);

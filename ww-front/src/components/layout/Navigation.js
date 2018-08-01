@@ -15,7 +15,7 @@ export class Navigation extends Component {
     this.changePage = this.changePage.bind(this);
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { sort, page } = this.state;
     await getAllPieces(this, sort, page);
   }
@@ -43,6 +43,7 @@ export class Navigation extends Component {
     const { pieces, page, isLast } = this.state;
     let display = 'Loading...';
     let piecePagination = '';
+    console.log(isLast);
 
     // TODO: move this to its own functional component? seems simple enough
     if (pieces) {
@@ -59,16 +60,22 @@ export class Navigation extends Component {
     }
 
     if (page === 1) {
-      piecePagination = (
-        <div className="pagination-container">
-          <div />
-          <i
-            onClick={() => { this.changePage(true); }}
-            className="fa fa-chevron-circle-right"
-            aria-hidden="true"
-          />
-        </div>
-      );
+      if (isLast) {
+        piecePagination = (
+          <div className="pagination-container" />
+        );
+      } else {
+        piecePagination = (
+          <div className="pagination-container">
+            <div />
+            <i
+              onClick={() => { this.changePage(true); }}
+              className="fa fa-chevron-circle-right"
+              aria-hidden="true"
+            />
+          </div>
+        );
+      }
     } else if (isLast) {
       piecePagination = (
         <div className="pagination-container">
@@ -105,7 +112,7 @@ export class Navigation extends Component {
         <UserNav {...this.props} />
         <div className="pieces-list">
           <div className="pieces-list-header">
-            { 'Pieces' }
+            { 'Short Stories' }
             <i
               onClick={() => { this.setSort('recent'); }}
               className="fa fa-clock-o"
