@@ -23,7 +23,8 @@ console.log(uri);
 mongoose.connect(uri, (err, res) => {
   if (err) {
     console.log(`ERROR connecting to ${uri} due to ${err}`);
-  } else {
+    throw err;
+  } else {npm 
     console.log(`Succeeded connected to: ${uri} with ${res}`);
   }
 });
