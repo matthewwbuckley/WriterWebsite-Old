@@ -61,7 +61,7 @@ class Piece extends Component {
     }
   }
 
-  componentDidUpdate() {
+  async componentDidUpdate() {
     const {
       piece,
       revealed,
@@ -74,9 +74,9 @@ class Piece extends Component {
     console.log(piece, pieceId, stateUser, propsUser)
 
     if (piece && ((piece._id !== pieceId) || (stateUser.userId !== propsUser.userId) )) {
-      this.setState({ user: propsUser });
+      await this.setState({ user: propsUser });
       if (revealed) {
-        this.setState({ revealed: false });
+        await this.setState({ revealed: false });
       }
       if (propsUser) {
         this.refreshPiece(propsUser.userId);
