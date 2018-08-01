@@ -35,16 +35,7 @@ class Piece extends Component {
   }
 
   async componentDidMount() {
-    const propsUser = get(this.props, 'app.state.user', {});
-    this.setState({ user: propsUser });
-
-    if (propsUser) {
-      console.log("PropsUser",propsUser);
-      this.refreshPiece(propsUser._id);
-    } else {
-      console.log("no props user")
-      this.refreshPiece();
-    }
+    this.refreshPiece();
   }
 
   revealRatings() {
@@ -61,7 +52,7 @@ class Piece extends Component {
     }
   }
 
-  async componentDidUpdate() {
+  componentDidUpdate() {
     const {
       piece,
       revealed,
@@ -69,16 +60,18 @@ class Piece extends Component {
     } = this.state;
 
     const pieceId = get(this.props, 'match.params.pieceId', null);
-    const propsUser = get(this.props, 'app.state.user', {});
+    const propsUser = get(this.props, 'app.state.user', {}) || {};
 
-    console.log(piece, pieceId, stateUser, propsUser)
+    console.log("hi", piece, pieceId, stateUser, propsUser)
 
     if (piece && ((piece._id !== pieceId) || (stateUser.userId !== propsUser.userId) )) {
-      await this.setState({ user: propsUser });
-      if (revealed) {
-        await this.setState({ revealed: false });
+      if (stateUser.userId !== propsUser.userId) {
+        this.setState({ user: propsUser });
       }
-      if (propsUser) {
+      if (revealed) {
+        this.setState({ revealed: false });
+      }
+      if (propsUser.userId) {
         this.refreshPiece(propsUser.userId);
       } else {
         this.refreshPiece();
