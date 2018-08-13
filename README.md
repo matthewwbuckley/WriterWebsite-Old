@@ -2,7 +2,7 @@
 
 This is a restricted CRUD App, which I built while learning the React framework. Due to it being developed while learning there are a number of flaws/antipaterns.
 
-This website can be viewed at https://writer-205511.appspot.com/ and is a simple app that allows users to register and submit short stories which can then be rated. Feel free to sign up, the email is not validated, but is required.
+A simple app that allows users to register and submit short stories which can then be rated.
 
 In the API backend you will find:
 - auth: this will handle registration, sign up, and tocken checking.
