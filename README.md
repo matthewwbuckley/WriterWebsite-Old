@@ -5,7 +5,7 @@ This is a restricted CRUD App, which I built while learning the React framework.
 A simple app that allows users to register and submit short stories which can then be rated.
 
 In the API backend you will find:
-- auth: this will handle registration, sign up, and tocken checking.
+- auth: this will handle registration, sign up, and token checking.
 - piece: this handles submission and returning the short stories.
 - rating: this handles the submission of ratings.
 
