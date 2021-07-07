@@ -7,40 +7,19 @@ const Comment = ({
   date,
 }) => {
   let ratingDisplay = null;
-  if (rating === 3) {
+
+  if (rating > 0) {
     ratingDisplay = (
-      <i className="fa fa-plus-circle size3" aria-hidden="true" />
-    );
-  }
-  if (rating === 2) {
+      <i className=`fa fa-plus-circle size${rating}` aria-hidden="true" />
+    )
+  } else if (rating < 0) {
     ratingDisplay = (
-      <i className="fa fa-plus-circle size2" aria-hidden="true" />
-    );
-  }
-  if (rating === 1) {
-    ratingDisplay = (
-      <i className="fa fa-plus-circle size1" aria-hidden="true" />
-    );
-  }
-  if (rating === 0) {
+      <i className=`fa fa-minus-circle size${rating}` aria-hidden="true" />
+    )
+  } else {
     ratingDisplay = (
       <i className="fa fa-circle-o size2" aria-hidden="true" />
-    );
-  }
-  if (rating === -1) {
-    ratingDisplay = (
-      <i className="fa fa-minus-circle size1" aria-hidden="true" />
-    );
-  }
-  if (rating === -2) {
-    ratingDisplay = (
-      <i className="fa fa-minus-circle size2" aria-hidden="true" />
-    );
-  }
-  if (rating === -3) {
-    ratingDisplay = (
-      <i className="fa fa-minus-circle size3" aria-hidden="true" />
-    );
+    )
   }
 
   return (
